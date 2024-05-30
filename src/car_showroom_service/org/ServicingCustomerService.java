@@ -14,6 +14,10 @@ public class ServicingCustomerService {
 		
 		return scr.getCustomerIdByName(name);
 	}
+	public boolean isShowAllServicigCutomer() {
+		
+		return scr.isShowAllServicigCutomer();
+	}
 
 	
 
