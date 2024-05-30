@@ -6,7 +6,7 @@ import car_showroom_model.org.CarMasterModel;
 import car_showroom_model.org.LoginModel;
 import car_showroom_service.org.CarMasterService;
 import car_showroom_service.org.LoginService;
-
+import java.util.*;
 public class CarShowroomClient {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
@@ -48,48 +48,59 @@ public class CarShowroomClient {
 						LoginModel eLModel = new LoginModel(uName, passWord);
 						boolean b = lServices.isValidShowEmp(eLModel);
 						if (b) {
+							// showroom
 							System.out.println("login succesfull");
+							int choice3=0;
+							do {
+								System.out.println("1. Add Car Data");
+								System.out.println("2. Display All Cars");
+								System.out.println("4. Exit!!!");
+								System.out.println("Enter the Choice ");
+								choice3=sc.nextInt();
+								sc.nextLine();
+								switch(choice3)
+								{
+								case 1:
+									System.out.println("Enter the Car Name ");
+									String carName=sc.nextLine();
+									System.out.println("Enter the Car Price");
+									long carPrice=sc.nextInt();
+									System.out.println("Enter the number of Cars ");
+									int noOfCar=sc.nextInt();
+									sc.nextLine();
+									CarMasterModel cMModel= new CarMasterModel(carName,carPrice,noOfCar);
+									if(cMService.addCarData(cMModel))
+									{
+										System.out.println("Car is add succesfull:)");
+									}
+									else {
+										System.out.println("Car not added!!");
+									}
+									break;
+								case 2:
+									System.out.println("All Cars Information");
+									ArrayList<CarMasterModel> al=cMService.getAllCars();
+									System.out.println("Car ID \t Name \t Price \t Car Count");
+									for(CarMasterModel cMModel1 : al)
+									{
+										System.out.println(cMModel1.getCarId()+"\t"+cMModel1.getCarName()+"\t"+cMModel1.getCarPrice()+"\t"+cMModel1.getNoOfCar());
+									}
+									System.out.println();
+									break;
+								case 3:
+									break;
+								case 4:
+									System.out.println("Exit From ShowRoom ");
+									break;
+								}
+							}while(choice3!=4);
+							// end Showroom 
 
 						} else {
 							System.out.println("Not permitted to enter");
 						}
-						// showroom 
-						int choice3=0;
-						do {
-							System.out.println("1. Add Car Data");
-							System.out.println("4. Exit!!!");
-							System.out.println("Enter the Choice ");
-							choice3=sc.nextInt();
-							sc.nextLine();
-							switch(choice3)
-							{
-							case 1:
-								System.out.println("Enter the Car Name ");
-								String carName=sc.nextLine();
-								System.out.println("Enter the Car Price");
-								long carPrice=sc.nextInt();
-								System.out.println("Enter the number of Cars ");
-								int noOfCar=sc.nextInt();
-								sc.nextLine();
-								CarMasterModel cMModel= new CarMasterModel(carName,carPrice,noOfCar);
-								if(cMService.addCarData(cMModel))
-								{
-									System.out.println("Car is add succesfull:)");
-								}
-								else {
-									System.out.println("Car not added!!");
-								}
-								break;
-							case 2:
-								break;
-							case 3:
-								break;
-							case 4:
-								System.out.println("Exit From ShowRoom ");
-								break;
-							}
-						}while(choice3!=4);
-						// end Showroom 
+						 
+						
 						break;
 					case 2:
 						System.out.println("Enter the Employee User Name ");
