@@ -51,5 +51,24 @@ public class CarIssueRepository extends DBHelper {
 		}
 		
 	}
+	public boolean isShowAllIssue() {
+		try
+		{
+			pstmt=conn.prepareStatement("select * from carIssue;");
+			rs=pstmt.executeQuery();
+			System.out.println("Issue id\tIssue name");
+			while(rs.next())
+			{
+				System.out.println(rs.getInt(1)+"\t"+rs.getString(2));
+			}
+			return true;
+		
+		}
+		catch(Exception e)
+		{
+			System.out.println("Error fetching issue");
+			return false;
+		}
+	}
 
 }
