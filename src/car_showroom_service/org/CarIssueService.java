@@ -13,6 +13,9 @@ public class CarIssueService {
 	{
 		return cisrepo.getIssueId(iname);
 	}
+	public boolean isShowAllIssue() {
+		return cisrepo.isShowAllIssue();
+	}
 		
 
 }
