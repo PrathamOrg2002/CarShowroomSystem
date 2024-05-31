@@ -116,6 +116,8 @@ public class CarShowroomClient {
 								System.out.println("\n===x=== Welcome To Servicing center Block ===x===\n");
 								System.out.println("1. Add new Customer");
 								System.out.println("2. Add new problems/issue/modification element of car");
+								System.out.println("3. Show all problems/issue/modification element of car present in database");
+								System.out.println("4. Show all Customer");
 								System.out.println("5. Exit");
 								System.out.println("\n===x=========================================x===\n");
 								System.out.println("Enter your choice");
@@ -192,7 +194,12 @@ public class CarShowroomClient {
 										System.out.println("Error while adding Issue...");
 									}
 									break;
-								
+								case 3:
+									b=cis.isShowAllIssue();
+									break;
+								case 4:
+									b=scs.isShowAllServicigCutomer();
+									break;
 								default:
 									System.out.println("Enter correct choice");
 								}
