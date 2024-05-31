@@ -6,22 +6,30 @@ import java.util.Scanner;
 import car_showroom_model.org.CarIssue;
 import car_showroom_model.org.CarMasterModel;
 import car_showroom_model.org.LoginModel;
+
 import car_showroom_model.org.ServicingCarModel;
 import car_showroom_model.org.ServicingCustomerModel;
 import car_showroom_service.org.CarIssueService;
 import car_showroom_service.org.CarMasterService;
 import car_showroom_service.org.LoginService;
 import car_showroom_service.org.ServicingCustomerService;
+import car_showroom_model.org.ShowRoomCustomreModel;
+import car_showroom_service.org.ShowroomCustomerService;
 
+import java.util.*;
 public class CarShowroomClient {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		CarMasterService cMService= new CarMasterService();
 		LoginService lServices = new LoginService();
+
+  	ShowroomCustomerService sCService= new ShowroomCustomerService();
 		ServicingCustomerService scs=new ServicingCustomerService();
 		CarIssueService cis=new CarIssueService();
+
 		int choice = 0;
 		int choice2 = 0;
+		int choice4=0;
 		do {
 			System.out.println("\n1. Cars for Customer :) :)");
 			System.out.println("2. Employee Login :) :)");
@@ -33,7 +41,72 @@ public class CarShowroomClient {
 
 			switch (choice) {
 			case 1:
-
+				System.out.println("🎉🎉 Welcome to Car Showroom 🎉🎉");
+				System.out.println("🙏 Please Fill The Enquiry Form 🙏");
+				System.out.println("Enter the Full Name ");
+				String name=sc.nextLine();
+				System.out.println("Enter the Contact Number");
+				String contact=sc.nextLine();
+				System.out.println("Enter the City ");
+				String city=sc.nextLine();
+				ShowRoomCustomreModel scModel= new ShowRoomCustomreModel(name,contact,city);
+				if(sCService.AddShowRCustInfo(scModel))
+				{
+					do
+					{
+						System.out.println("1. Display All Cars");
+						System.out.println("2. See's The Discount Here");
+						System.out.println("3. Gate Estimate of Car");
+						System.out.println("4. Gate Bill Of Car");
+						System.out.println("5. Exit from Customer Menu 😊😊");
+						System.out.println("Enter the choice ");
+						choice4=sc.nextInt();
+						sc.nextLine();
+						switch(choice4)
+						{
+						case 1:
+							System.out.println("All Cars Information");
+							ArrayList<CarMasterModel> al=cMService.getAllCars();
+							System.out.println("Car ID \t Name \t Price ");
+							for(CarMasterModel cMModel1 : al)
+							{
+								System.out.println(cMModel1.getCarId()+"\t"+cMModel1.getCarName()+"\t"+cMModel1.getCarPrice());
+							}
+							System.out.println();
+							break;
+						case 2:
+							if(sCService.checkDiscount())
+							{
+								System.out.println("you have 5000/- Discount on Car");
+								System.out.println("🎉🎉🎉 Congratulations 🎉🎉🎉");
+							}
+							else
+							{
+								System.out.println("You don't have a Discount on Car ");
+								System.out.println("🤗🤗 Better luck next time 🤗🤗");
+							}
+							break;
+						case 3:
+							break;
+						case 4:
+							break;
+						case 5:
+							System.out.println("🙏 Exit from Customer Menu 🙏");
+							break;
+						default:
+							System.out.println("Invalid Choice 😒😒");
+							break;
+						}
+					}while(choice4!=5);
+					
+				}
+				else
+				{
+					System.out.println("🙏🙏 Fill Complite Enquiry Form 🙏🙏");
+				}
+				
+				
+				
 				break;
 			case 2: // Employee Login
 
@@ -56,11 +129,14 @@ public class CarShowroomClient {
 						LoginModel eLModel = new LoginModel(uName, passWord);
 						boolean b = lServices.isValidShowEmp(eLModel);
 						if (b) {
+							// showroom
 							System.out.println("login succesfull");
+
 							// showroom 
 							int choice3=0;
 							do {
 								System.out.println("1. Add Car Data");
+                System.out.println("2. Display All Cars");
 								System.out.println("4. Exit!!!");
 								System.out.println("Enter the Choice ");
 								choice3=sc.nextInt();
@@ -85,6 +161,15 @@ public class CarShowroomClient {
 									}
 									break;
 								case 2:
+
+									System.out.println("All Cars Information");
+									ArrayList<CarMasterModel> al=cMService.getAllCars();
+									System.out.println("Car ID \t Name \t Price \t Car Count");
+									for(CarMasterModel cMModel1 : al)
+									{
+										System.out.println(cMModel1.getCarId()+"\t"+cMModel1.getCarName()+"\t"+cMModel1.getCarPrice()+"\t"+cMModel1.getNoOfCar());
+									}
+//									System.out.println();
 									break;
 								case 3:
 									break;
