@@ -23,5 +23,13 @@ public class CarMasterService {
 		// TODO Auto-generated method stub
 		return cMRepo.getShowCarNameById(carId);
 	}
+	public long getShowCarPriceByName(String carName) {
+		// TODO Auto-generated method stub
+		return cMRepo.getShowCarPriceByName(carName);
+	}
+	public int getCarIdbyName(String carName) {
+		// TODO Auto-generated method stub
+		return cMRepo.getCarIdbyName(carName);
+	}
 
 }
