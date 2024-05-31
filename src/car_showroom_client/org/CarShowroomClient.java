@@ -75,7 +75,11 @@ public class CarShowroomClient {
 								System.out.println("🤗🤗 Better luck next time 🤗🤗");
 							}
 							break;
-						case 3:
+						case 3: //Gate Estimate of Car
+							System.out.println("  Car Estimate  ");
+							System.out.println("Enter the Car Id ");
+							int CarId=sc.nextInt();
+//							long carPrice=
 							break;
 						case 4:
 							break;
@@ -124,6 +128,7 @@ public class CarShowroomClient {
 							do {
 								System.out.println("1. Add Car Data");
 								System.out.println("2. Display All Cars");
+								System.out.println("3. Add Insurance Info");
 								System.out.println("4. Exit!!!");
 								System.out.println("Enter the Choice ");
 								choice3=sc.nextInt();
