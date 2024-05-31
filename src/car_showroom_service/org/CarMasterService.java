@@ -1,5 +1,7 @@
 package car_showroom_service.org;
 
+import java.util.ArrayList;
+
 import car_showroom_model.org.CarMasterModel;
 import car_showroom_repository.org.CarMasterRepository;
 
@@ -8,6 +10,10 @@ public class CarMasterService {
 	public boolean addCarData(CarMasterModel cMModel) {
 		// TODO Auto-generated method stub
 		return cMRepo.addCarData(cMModel);
+	}
+	public ArrayList<CarMasterModel> getAllCars() {
+		// TODO Auto-generated method stub
+		return cMRepo.getAllCars();
 	}
 
 }
