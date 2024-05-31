@@ -14,7 +14,9 @@ import car_showroom_service.org.CarMasterService;
 import car_showroom_service.org.LoginService;
 import car_showroom_service.org.ServicingCustomerService;
 import car_showroom_model.org.ShowRoomCustomreModel;
+import car_showroom_model.org.ShowroomInsuranceModel;
 import car_showroom_service.org.ShowroomCustomerService;
+import car_showroom_service.org.ShowroomInsuranceService;
 
 import java.util.*;
 public class CarShowroomClient {
@@ -26,6 +28,7 @@ public class CarShowroomClient {
   	ShowroomCustomerService sCService= new ShowroomCustomerService();
 		ServicingCustomerService scs=new ServicingCustomerService();
 		CarIssueService cis=new CarIssueService();
+		ShowroomInsuranceService shInsService= new ShowroomInsuranceService();
 
 		int choice = 0;
 		int choice2 = 0;
@@ -86,7 +89,33 @@ public class CarShowroomClient {
 								System.out.println("🤗🤗 Better luck next time 🤗🤗");
 							}
 							break;
-						case 3:
+						case 3: //Gate Estimate of Car
+							System.out.println("  Car Estimate  ");
+							System.out.println("Enter the Car Id ");
+							int CarId=sc.nextInt();
+							long carPrice=cMService.getShowCarPriceById(CarId);
+							String carName=cMService.getShowCarNameById(CarId);
+							System.out.println("Insurance List ");
+							ArrayList<ShowroomInsuranceModel> al1=shInsService.getInsuranceList();
+							if(al1!=null)
+							{
+								System.out.println("Id \t Name \t Price");
+								for(ShowroomInsuranceModel shIM:al1)
+								{
+									System.out.println(shIM.getInsId()+"\t"+shIM.getName()+"\t"+shIM.getPrice());
+								}
+							}
+							else
+							{
+								System.out.println("Insurance List is not present ????");
+							}
+							System.out.println("Enter the Insurance Id");
+							int insId=sc.nextInt();
+							ShowroomInsuranceModel shRInsModel=shInsService.getInsurancePrice(insId);
+							
+							System.out.println("Car Name "+carName+"\tEx Showroom  Price"+carPrice);
+							System.out.println("Insurance Name "+shRInsModel.getName()+"\tPrice "+shRInsModel.getPrice());
+							System.out.println("Total Price is "+(carPrice+shRInsModel.getPrice()));
 							break;
 						case 4:
 							break;
@@ -136,7 +165,8 @@ public class CarShowroomClient {
 							int choice3=0;
 							do {
 								System.out.println("1. Add Car Data");
-                System.out.println("2. Display All Cars");
+								System.out.println("2. Display All Cars");
+								System.out.println("3. Add Insurance Info");
 								System.out.println("4. Exit!!!");
 								System.out.println("Enter the Choice ");
 								choice3=sc.nextInt();
@@ -172,6 +202,19 @@ public class CarShowroomClient {
 //									System.out.println();
 									break;
 								case 3:
+									System.out.println("Enter the Insurance Name");
+									String InsuranceName=sc.nextLine();
+									System.out.println("Enter the Insurance Price");
+									long insPrice=sc.nextLong();
+									ShowroomInsuranceModel shInsModel= new ShowroomInsuranceModel(InsuranceName,insPrice);
+									if(shInsService.setInsuranceInfo(shInsModel))
+									{
+										System.out.println("Insurance Information is added");
+									}
+									else
+									{
+										System.out.println("Insurance Information is not added");
+									}
 									break;
 								case 4:
 									System.out.println("Exit From ShowRoom ");
@@ -213,9 +256,9 @@ public class CarShowroomClient {
 								{
 								case 1:
 									System.out.println("Enter Customer Name");
-									String name=sc.nextLine();
+									name=sc.nextLine();
 									System.out.println("Enter Customer Contact number");
-									String contact =sc.nextLine();
+									contact =sc.nextLine();
 									
 									System.out.println("Enter Car Number");
 									String carnumber=sc.nextLine();
