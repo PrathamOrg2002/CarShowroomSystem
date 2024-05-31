@@ -50,4 +50,52 @@ public class CarMasterRepository extends DBHelper{
 		return null;
 	}
 
+	public long getShowCarPriceById(int carId) {
+		// TODO Auto-generated method stub
+		try
+		{
+			pstmt=conn.prepareStatement("select carPrice from carmaster where carId=?");
+			pstmt.setInt(1, carId);
+			rs=pstmt.executeQuery();
+			if(rs.next())
+			{
+				return rs.getLong(1);
+			}
+			else
+			{
+				return -1;
+			}
+				
+		}
+		catch(Exception ex)
+		{
+			System.out.println("Error in get Showroom Car Price By Id "+ex);
+		}
+		return -1;
+	}
+
+	public String getShowCarNameById(int carId) {
+		// TODO Auto-generated method stub
+		try
+		{
+			pstmt=conn.prepareStatement("select carName from carmaster where carId=?");
+			pstmt.setInt(1, carId);
+			rs=pstmt.executeQuery();
+			if(rs.next())
+			{
+				return rs.getString(1);
+			}
+			else
+			{
+				return null;
+			}
+				
+		}
+		catch(Exception ex)
+		{
+			System.out.println("Error in get Showroom Car Price By Id "+ex);
+		}
+		return null;
+	}
+
 }
