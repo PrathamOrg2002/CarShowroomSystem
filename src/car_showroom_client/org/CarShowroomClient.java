@@ -12,6 +12,7 @@ import car_showroom_model.org.ServicingCustomerModel;
 import car_showroom_service.org.CarIssueService;
 import car_showroom_service.org.CarMasterService;
 import car_showroom_service.org.LoginService;
+import car_showroom_service.org.ServicingCarService;
 import car_showroom_service.org.ServicingCustomerService;
 import car_showroom_service.org.ShowroomCarBillService;
 import car_showroom_model.org.ShowRoomCustomreModel;
@@ -26,9 +27,9 @@ public class CarShowroomClient {
 		Scanner sc = new Scanner(System.in);
 		CarMasterService cMService= new CarMasterService();
 		LoginService lServices = new LoginService();
-
   	ShowroomCustomerService sCService= new ShowroomCustomerService();
 		ServicingCustomerService scs=new ServicingCustomerService();
+		ServicingCarService scservice=new ServicingCarService();
 		CarIssueService cis=new CarIssueService();
 		ShowroomInsuranceService shInsService= new ShowroomInsuranceService();
 		ShowroomCarBillService sCBillService=new ShowroomCarBillService();
@@ -46,8 +47,8 @@ public class CarShowroomClient {
 
 			switch (choice) {
 			case 1:
-				System.out.println("🎉🎉 Welcome to Car Showroom 🎉🎉");
-				System.out.println("🙏 Please Fill The Enquiry Form 🙏");
+				System.out.println("ðŸŽ‰ðŸŽ‰ Welcome to Car Showroom ðŸŽ‰ðŸŽ‰");
+				System.out.println("ðŸ™� Please Fill The Enquiry Form ðŸ™�");
 				System.out.println("Enter the Full Name ");
 				String name=sc.nextLine();
 				System.out.println("Enter the Contact Number");
@@ -60,6 +61,7 @@ public class CarShowroomClient {
 					do
 					{
 						System.out.println("1. Display All Cars");
+
 						System.out.println("2. See The Discount Here");
 						System.out.println("3. Get Estimate of Car");
 						System.out.println("4. Get Bill Of Car");
@@ -83,12 +85,12 @@ public class CarShowroomClient {
 							if(sCService.checkDiscount())
 							{
 								System.out.println("you have 5000/- Discount on Car");
-								System.out.println("🎉🎉🎉 Congratulations 🎉🎉🎉");
+								System.out.println("ðŸŽ‰ðŸŽ‰ðŸŽ‰ Congratulations ðŸŽ‰ðŸŽ‰ðŸŽ‰");
 							}
 							else
 							{
 								System.out.println("You don't have a Discount on Car ");
-								System.out.println("🤗🤗 Better luck next time 🤗🤗");
+								System.out.println("ðŸ¤—ðŸ¤— Better luck next time ðŸ¤—ðŸ¤—");
 							}
 							break;
 						case 3: //Gate Estimate of Car
@@ -162,10 +164,10 @@ public class CarShowroomClient {
 							System.out.println("🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆\n");
 							break;
 						case 5:
-							System.out.println("🙏 Exit from Customer Menu 🙏");
+							System.out.println("ðŸ™� Exit from Customer Menu ðŸ™�");
 							break;
 						default:
-							System.out.println("Invalid Choice 😒😒");
+							System.out.println("Invalid Choice ðŸ˜’ðŸ˜’");
 							break;
 						}
 					}while(choice4!=5);
@@ -173,7 +175,7 @@ public class CarShowroomClient {
 				}
 				else
 				{
-					System.out.println("🙏🙏 Fill Complite Enquiry Form 🙏🙏");
+					System.out.println("ðŸ™�ðŸ™� Fill Complite Enquiry Form ðŸ™�ðŸ™�");
 				}
 				
 				
@@ -288,6 +290,8 @@ public class CarShowroomClient {
 								System.out.println("2. Add new problems/issue/modification element of car");
 								System.out.println("3. Show all problems/issue/modification element of car present in database");
 								System.out.println("4. Show all Customer");
+								System.out.println("5. Search car by id");
+								System.out.println("6. Change car status");
 								System.out.println("5. Exit");
 								System.out.println("\n===x=========================================x===\n");
 								System.out.println("Enter your choice");
@@ -298,10 +302,9 @@ public class CarShowroomClient {
 								{
 								case 1:
 									System.out.println("Enter Customer Name");
-									name=sc.nextLine();
+									 name=sc.nextLine();
 									System.out.println("Enter Customer Contact number");
-									contact =sc.nextLine();
-									
+									 contact =sc.nextLine();									
 									System.out.println("Enter Car Number");
 									String carnumber=sc.nextLine();
 									System.out.println("Enter Car model name");
@@ -369,6 +372,31 @@ public class CarShowroomClient {
 									break;
 								case 4:
 									b=scs.isShowAllServicigCutomer();
+									break;
+								case 5:
+									System.out.println("Enter car id");
+									int carid=sc.nextInt();
+									sc.nextLine();
+									b=scservice.getCarById(carid);
+									break;
+								case 6:
+									System.out.println("Enter car id");
+									carid=sc.nextInt();
+									sc.nextLine();
+									b=scservice.getCarById(carid);
+									if(b)
+									{
+										System.out.println("Is car ready for delivery (yes/no)");
+										replay=sc.nextLine();
+										if(replay.equals("yes"))
+										{
+											b=scservice.changeCarStatusYesById(carid);
+										}
+										else if(replay.equals("no"))
+										{
+											b=scservice.changeCarStatusNoById(carid);
+										}	
+									}
 									break;
 								default:
 									System.out.println("Enter correct choice");
