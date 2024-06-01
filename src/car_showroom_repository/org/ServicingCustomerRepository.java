@@ -95,7 +95,8 @@ public class ServicingCustomerRepository extends DBHelper {
 		try
 		{
 			pstmt=conn.prepareStatement(" select * from ServicingCustomerModel am inner join carcusomerjoin cj on cj.scid=am.scid inner join servicingcarmodel sc on sc.id=cj.id;");
-			rs=pstmt.executeQuery();			
+			rs=pstmt.executeQuery();
+			System.out.println("scid\tcname\tcontact\t\trecurr\tcarid\tcarno.\tcarmodelname\tcarstatus");
 			while(rs.next())
 			{
 				System.out.println(rs.getInt(1)+"\t"+rs.getString(2)+"\t"+rs.getString(3)+"\t"+rs.getInt(4)+"\t"+rs.getInt(7)+"\t"+rs.getString(8)+"\t"+rs.getString(9)+"\t"+rs.getInt(10));
