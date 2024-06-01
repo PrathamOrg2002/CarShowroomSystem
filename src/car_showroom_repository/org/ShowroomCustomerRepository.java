@@ -27,4 +27,25 @@ public class ShowroomCustomerRepository extends DBHelper{
 		return false;
 	}
 
+	public int getCustIdByName(ShowRoomCustomreModel sRCModel) {
+		try {
+			pstmt=conn.prepareStatement("select scId from showroomcust where custName=? and contact=?");
+			pstmt.setString(1, sRCModel.getCustName());
+			pstmt.setString(2,sRCModel.getContact());
+			rs=pstmt.executeQuery();
+			if(rs.next())
+			{
+				return rs.getInt(1);
+			}
+			else
+			{
+				return -1;
+			}
+		}catch(Exception ex)
+		{
+			System.out.println("Error in get Cust Id by Name "+ex);
+		}
+		return 0;
+	}
+
 }
