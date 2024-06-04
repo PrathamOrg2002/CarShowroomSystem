@@ -9,10 +9,10 @@ import java.util.*;
 public class ShowroomInsuranceRepository extends DBHelper{
 
 	public boolean setInsuranceInfo(ShowroomInsuranceModel shInsModel) {
-		// TODO Auto-generated method stub
 		try
 		{
-			pstmt=conn.prepareStatement("insert into insuranceMaster values ('0',?,?)");
+			String insertInInsMaster=p.getProperty("insertInInsMaster");
+			pstmt=conn.prepareStatement(insertInInsMaster);
 			pstmt.setString(1, shInsModel.getName());
 			pstmt.setLong(2,shInsModel.getPrice());
 			return pstmt.executeUpdate()>0 ? true: false ;
@@ -26,11 +26,11 @@ public class ShowroomInsuranceRepository extends DBHelper{
 	}
 
 	public ArrayList<ShowroomInsuranceModel> getInsuranceList() {
-		// TODO Auto-generated method stub
 		ArrayList<ShowroomInsuranceModel> al= new ArrayList<ShowroomInsuranceModel>();
 		try
 		{
-			pstmt=conn.prepareStatement("select *from insuranceMaster");
+			String selectAllInsurance=p.getProperty("selectAllInsurance");
+			pstmt=conn.prepareStatement(selectAllInsurance);
 			rs=pstmt.executeQuery();
 			while(rs.next())
 			{
@@ -52,25 +52,23 @@ public class ShowroomInsuranceRepository extends DBHelper{
 	}
 
 	public ShowroomInsuranceModel getInsurancePrice(int insId) {
-		// TODO Auto-generated method stub
-//		ShowroomInsuranceModel shInsModel= new ShowroomInsuranceModel();
 		try
 		{
-			pstmt=conn.prepareStatement("select *from insuranceMaster where insId=?");
+			String selectInsById=p.getProperty("selectInsById");
+			pstmt=conn.prepareStatement(selectInsById);
 			pstmt.setInt(1, insId);
 			rs=pstmt.executeQuery();
 			if(rs.next())
 			{
-				
 				return new ShowroomInsuranceModel(rs.getString(2),rs.getLong(3));
 			}
+			return null;
 		}
 		catch(Exception ex)
 		{
 			System.out.println("Error in Get price metode "+ex);
-			
+			return null;
 		}
-		return null;
 	}
 
 }
