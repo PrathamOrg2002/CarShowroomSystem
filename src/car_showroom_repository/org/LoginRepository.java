@@ -9,13 +9,13 @@ public class LoginRepository extends DBHelper {
 		
 		try
 		{
-			pstmt=conn.prepareStatement("select * from empCarlogin where uName=? and pWord=?;");
+			String selectEmpCarLogin=p.getProperty("selectEmpCarLogin");
+			pstmt=conn.prepareStatement(selectEmpCarLogin);
 			pstmt.setString(1, eRM.getuName());
 			pstmt.setString(2, eRM.getpWord());
 			rs=pstmt.executeQuery();
 			if(rs.next())
 			{
-				System.out.println("Valid user ");
 				if(rs.getInt(4)==1)
 				{
 					
@@ -23,7 +23,7 @@ public class LoginRepository extends DBHelper {
 				}
 				else
 				{
-					System.out.println("Take authentication from admin");
+					System.out.println("Not authorized.Take authentication from admin");
 					return false;
 				}
 			}
@@ -35,16 +35,16 @@ public class LoginRepository extends DBHelper {
 		}
 		catch(Exception e)
 		{
-			System.out.println("Erro is "+e);
+			System.out.println("Error is "+e);
 			return false;
 		}
 		
 	}
 	public boolean isValidServiceEmp(LoginModel eLModel) {
-		// TODO Auto-generated method stub
 		try
 		{
-			pstmt=conn.prepareStatement("select * from empservicelogin where uName=? and pWord=?;");
+			String selectEmpSerLogin=p.getProperty("selectEmpSerLogin");
+			pstmt=conn.prepareStatement(selectEmpSerLogin);
 			pstmt.setString(1, eLModel.getuName());
 			pstmt.setString(2, eLModel.getpWord());
 			rs=pstmt.executeQuery();
@@ -64,21 +64,22 @@ public class LoginRepository extends DBHelper {
 			else
 			{
 				System.out.println("Invalid user please sign up first...");
+				return false;
 			}
 		}
 		catch(Exception e)
 		{
-			System.out.println("Erro is "+e);
+			System.out.println("Error is "+e);
 			return false;
 		}
-		return false;
+		
 	}
 
 	public boolean empSignUpInShowR(LoginModel eLModel) {
-		// TODO Auto-generated method stub
 		try
 		{
-			pstmt=conn.prepareStatement("insert into empCarlogin (eid,uName,pWord) values ('0',?,?)");
+			String insertInEmpCarLogin=p.getProperty("insertInEmpCarLogin");
+			pstmt=conn.prepareStatement(insertInEmpCarLogin);
 			pstmt.setString(1, eLModel.getuName());
 			pstmt.setString(2, eLModel.getpWord());
 			int value=pstmt.executeUpdate();
@@ -97,10 +98,10 @@ public class LoginRepository extends DBHelper {
 	}
 
 	public boolean empSignUpInService(LoginModel eLModel) {
-		// TODO Auto-generated method stub
 		try
 		{
-			pstmt=conn.prepareStatement("insert into empservicelogin (eid,uName,pWord) values ('0',?,?)");
+			String insertInEmpSerLogin=p.getProperty("insertInEmpSerLogin");
+			pstmt=conn.prepareStatement(insertInEmpSerLogin);
 			pstmt.setString(1, eLModel.getuName());
 			pstmt.setString(2, eLModel.getpWord());
 			int value=pstmt.executeUpdate();

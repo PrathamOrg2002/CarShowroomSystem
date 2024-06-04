@@ -6,10 +6,10 @@ import car_showroom_model.org.ShowroomCarBillModel;
 public class ShowroomCarBillRepository extends DBHelper{
 
 	public boolean addDataInBill(ShowroomCarBillModel sCBillModel) {
-		// TODO Auto-generated method stub
 		try
 		{
-			pstmt=conn.prepareStatement("insert into showCustCarjoin values (?,?)");
+			String insertInShowCustCarJoin=p.getProperty("insertInShowCustCarJoin");
+			pstmt=conn.prepareStatement(insertInShowCustCarJoin);
 			pstmt.setInt(1, sCBillModel.getCustId());
 			pstmt.setInt(2, sCBillModel.getCarId());
 			int value=pstmt.executeUpdate();
