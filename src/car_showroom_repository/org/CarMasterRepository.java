@@ -70,11 +70,12 @@ public class CarMasterRepository extends DBHelper{
 		catch(Exception ex)
 		{
 			System.out.println("Error in get Showroom Car Price By Id "+ex);
+
 			return -1;
 		}
 		
 	}
-
+  
 	public String getShowCarNameById(int carId) {
 		try
 		{
@@ -130,6 +131,7 @@ public class CarMasterRepository extends DBHelper{
 		{
 			String selectCarIdFromCarName=p.getProperty("selectCarIdFromCarName");
 			pstmt=conn.prepareStatement(selectCarIdFromCarName);
+
 			pstmt.setString(1, carName);
 			rs=pstmt.executeQuery();
 			if(rs.next())
@@ -140,6 +142,7 @@ public class CarMasterRepository extends DBHelper{
 			{
 				return -1;
 			}	
+
 		}
 		catch(Exception ex)
 		{

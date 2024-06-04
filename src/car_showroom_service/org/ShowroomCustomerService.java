@@ -13,6 +13,10 @@ public class ShowroomCustomerService {
 	public boolean checkDiscount() {
 		return scRepo.checkDiscount();
 	}
+	public int getCustIdByName(ShowRoomCustomreModel showRoomCustomreModel) {
+		// TODO Auto-generated method stub
+		return scRepo.getCustIdByName(showRoomCustomreModel);
+	}
 
 	public int getCustIdByName(ShowRoomCustomreModel showRoomCustomreModel) {
 		return scRepo.getCustIdByName(showRoomCustomreModel);

@@ -4,7 +4,6 @@ public class ShowroomInsuranceModel {
 	private int insId;
 	private String name;
 	private long price;
-
 	public ShowroomInsuranceModel() {
 
 	}

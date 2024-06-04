@@ -60,7 +60,6 @@ public class ShowroomInsuranceRepository extends DBHelper{
 			rs=pstmt.executeQuery();
 			if(rs.next())
 			{
-				
 				return new ShowroomInsuranceModel(rs.getString(2),rs.getLong(3));
 			}
 			return null;

@@ -33,6 +33,7 @@ public class CarShowroomClient {
 		CarIssueService cis = new CarIssueService();
 		ShowroomInsuranceService shInsService = new ShowroomInsuranceService();
 		ShowroomCarBillService sCBillService = new ShowroomCarBillService();
+
 		int choice = 0;
 		int choice2 = 0;
 		int choice4 = 0;
@@ -77,6 +78,7 @@ public class CarShowroomClient {
 					case 1:
 						ArrayList<CarMasterModel> al = cMService.getAllCars();
 						if (al != null) {
+		
 							System.out.println("All Cars Information");
 							System.out.println("Car ID \t Name \t Price ");
 							for (CarMasterModel cMModel1 : al) {
