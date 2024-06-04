@@ -5,9 +5,13 @@ import car_showroom_repository.org.ShowroomCarBillRepository;
 
 public class ShowroomCarBillService {
 	ShowroomCarBillRepository sCBRepo= new ShowroomCarBillRepository();
-	public boolean addDataInBill(ShowroomCarBillModel sCBillModel) {
+	public boolean addDataInCarCustJoin(ShowroomCarBillModel sCBillModel) {
 		// TODO Auto-generated method stub
-		return sCBRepo.addDataInBill(sCBillModel);
+		return sCBRepo.addDataInCarCustJoin(sCBillModel);
+	}
+	public void addDataInCustBill(ShowroomCarBillModel sCBillModel) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

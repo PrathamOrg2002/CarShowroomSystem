@@ -21,9 +21,21 @@ public class ShowroomCustomerRepository extends DBHelper{
 			return false;
 		}
 	}
-
-	public boolean checkDiscount() {
-		// TODO Auto-generated method stub
+	public boolean checkDiscount(int cid) {
+		try
+		{
+			pstmt=conn.prepareStatement("select count(scId) from showcustcarjoin where scId=?");
+			pstmt.setInt(1, cid);
+			rs=pstmt.executeQuery();
+			if(rs.next())
+			{
+				return rs.getInt(1)>3 ? true:false;
+			}
+		}
+		catch(Exception ex)
+		{
+			System.out.println("error in Check Discount method "+ex);
+		}
 		return false;
 	}
 

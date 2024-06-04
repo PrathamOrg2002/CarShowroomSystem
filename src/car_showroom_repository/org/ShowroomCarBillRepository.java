@@ -5,7 +5,7 @@ import car_showroom_model.org.ShowroomCarBillModel;
 
 public class ShowroomCarBillRepository extends DBHelper{
 
-	public boolean addDataInBill(ShowroomCarBillModel sCBillModel) {
+	public boolean addDataInCarCustJoin(ShowroomCarBillModel sCBillModel) {
 		// TODO Auto-generated method stub
 		try
 		{

@@ -52,24 +52,28 @@ public class ServicingCustomerRepository extends DBHelper {
 						value=pstmt.executeUpdate();
 						
 					}
-					
+					return true;
 				}
 				else
 				{
 					System.out.println("Error while adding customer");
+					return false;
 				}
+				
 			}
 			else
 			{
 				System.out.println("Error while adding carmodel");
+				return false;
 			}
 			
 		}
 		catch(Exception ex)
 		{
 			System.out.println("Error in Adding car Method!!! "+ex);
+			return false;
 		}
-		return false;
+		
 	}
 
 	public int getCustomerIdByName(String name) {

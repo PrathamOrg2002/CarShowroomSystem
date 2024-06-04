@@ -47,8 +47,8 @@ public class CarShowroomClient {
 
 			switch (choice) {
 			case 1:
-				System.out.println("ðŸŽ‰ðŸŽ‰ Welcome to Car Showroom ðŸŽ‰ðŸŽ‰");
-				System.out.println("ðŸ™� Please Fill The Enquiry Form ðŸ™�");
+				System.out.println("🤗🤗🤗 Welcome to Car Showroom 🤗🤗🤗");
+				System.out.println("🙏🙏🙏 Please Fill The Enquiry Form 🙏🙏🙏");
 				System.out.println("Enter the Full Name ");
 				String name=sc.nextLine();
 				System.out.println("Enter the Contact Number");
@@ -82,15 +82,23 @@ public class CarShowroomClient {
 							System.out.println();
 							break;
 						case 2:
-							if(sCService.checkDiscount())
+							System.out.println("Enter the Customer Name ");
+							String name1=sc.nextLine();
+							System.out.println("Enter the Contact number ");
+							String con=sc.nextLine();
+							ShowRoomCustomreModel srCModel= new ShowRoomCustomreModel();
+							srCModel.setCustName(name1);
+							srCModel.setContact(contact);
+							int cid=sCService.getCustIdByName(srCModel);
+							if(sCService.checkDiscount(cid))
 							{
 								System.out.println("you have 5000/- Discount on Car");
-								System.out.println("ðŸŽ‰ðŸŽ‰ðŸŽ‰ Congratulations ðŸŽ‰ðŸŽ‰ðŸŽ‰");
+								System.out.println("🎉🎉🎉🎉 Congratulations 🎉🎉🎉🎉");
 							}
 							else
 							{
 								System.out.println("You don't have a Discount on Car ");
-								System.out.println("ðŸ¤—ðŸ¤— Better luck next time ðŸ¤—ðŸ¤—");
+								System.out.println("😌😌😌 Better luck next time 😌😌😌");
 							}
 							break;
 						case 3: //Gate Estimate of Car
@@ -154,8 +162,12 @@ public class CarShowroomClient {
 							System.out.println("Insurance Name :- "+shRInsModel.getName()+"\t"+"Insurance Price :-"+shRInsModel.getPrice());
 							System.out.println("Total Bill :- "+(shRInsModel.getPrice()+carPrice));
 							ShowroomCarBillModel sCBillModel=new ShowroomCarBillModel(custId,carId);
-							if(sCBillService.addDataInBill(sCBillModel))
+							sCBillModel.setInsurance(shRInsModel.getPrice());
+							sCBillModel.setTotal((shRInsModel.getPrice()+carPrice));
+							
+							if(sCBillService.addDataInCarCustJoin(sCBillModel))
 							{
+								sCBillService.addDataInCustBill(sCBillModel);
 								System.out.println("😊😊 Bill Add succesfully 😊😊");
 							}
 							else {
@@ -164,7 +176,7 @@ public class CarShowroomClient {
 							System.out.println("🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆🔆\n");
 							break;
 						case 5:
-							System.out.println("ðŸ™� Exit from Customer Menu ðŸ™�");
+							System.out.println("🤗🤗🤗 Exit from Customer Menu 🤗🤗🤗");
 							break;
 						default:
 							System.out.println("Invalid Choice ðŸ˜’ðŸ˜’");
@@ -175,7 +187,7 @@ public class CarShowroomClient {
 				}
 				else
 				{
-					System.out.println("ðŸ™�ðŸ™� Fill Complite Enquiry Form ðŸ™�ðŸ™�");
+					System.out.println("😁😁😁 Fill Complite Enquiry Form 😁😁😁");
 				}
 				
 				
@@ -292,7 +304,7 @@ public class CarShowroomClient {
 								System.out.println("4. Show all Customer");
 								System.out.println("5. Search car by id");
 								System.out.println("6. Change car status");
-								System.out.println("5. Exit");
+								System.out.println("7. Exit");
 								System.out.println("\n===x=========================================x===\n");
 								System.out.println("Enter your choice");
 								choice3=sc.nextInt();
@@ -402,7 +414,7 @@ public class CarShowroomClient {
 									System.out.println("Enter correct choice");
 								}
 								
-							}while(choice3!=5);
+							}while(choice3!=7);
 							
 							//Servicing center end
 						} else {

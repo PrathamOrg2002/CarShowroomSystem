@@ -9,9 +9,9 @@ public class ShowroomCustomerService {
 		// TODO Auto-generated method stub
 		return scRepo.AddShowRCustInfo(scModel);
 	}
-	public boolean checkDiscount() {
+	public boolean checkDiscount(int cid) {
 		// TODO Auto-generated method stub
-		return scRepo.checkDiscount();
+		return scRepo.checkDiscount(cid);
 	}
 	public int getCustIdByName(ShowRoomCustomreModel showRoomCustomreModel) {
 		// TODO Auto-generated method stub
