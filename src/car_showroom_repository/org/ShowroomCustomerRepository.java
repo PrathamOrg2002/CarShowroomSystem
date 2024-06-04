@@ -6,10 +6,10 @@ import car_showroom_model.org.ShowRoomCustomreModel;
 public class ShowroomCustomerRepository extends DBHelper{
 
 	public boolean AddShowRCustInfo(ShowRoomCustomreModel scModel) {
-		// TODO Auto-generated method stub
 		try
 		{
-			pstmt=conn.prepareStatement("insert into showroomcust values('0',?,?,?)");
+			String insertInShowroomCust =p.getProperty("insertInShowroomCust");
+			pstmt=conn.prepareStatement(insertInShowroomCust);
 			pstmt.setString(1, scModel.getCustName());
 			pstmt.setString(2, scModel.getContact());
 			pstmt.setString(3, scModel.getCity());
@@ -23,8 +23,29 @@ public class ShowroomCustomerRepository extends DBHelper{
 	}
 
 	public boolean checkDiscount() {
-		// TODO Auto-generated method stub
 		return false;
+	}
+
+	public int getCustIdByName(ShowRoomCustomreModel sRCModel) {
+		try {
+			String selectIdByCustNameContact=p.getProperty("selectIdByCustNameContact");
+			pstmt=conn.prepareStatement(selectIdByCustNameContact);
+			pstmt.setString(1, sRCModel.getCustName());
+			pstmt.setString(2,sRCModel.getContact());
+			rs=pstmt.executeQuery();
+			if(rs.next())
+			{
+				return rs.getInt(1);
+			}
+			else
+			{
+				return -1;
+			}
+		}catch(Exception ex)
+		{
+			System.out.println("Error in get Cust Id by Name "+ex);
+			return -1;
+		}
 	}
 
 }
