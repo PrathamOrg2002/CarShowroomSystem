@@ -10,8 +10,8 @@ public class ShowroomCustomerService {
 		return scRepo.AddShowRCustInfo(scModel);
 	}
 
-	public boolean checkDiscount() {
-		return scRepo.checkDiscount();
+	public boolean checkDiscount(int custId) {
+		return scRepo.checkDiscount(custId);
 	}
 
 	public int getCustIdByName(ShowRoomCustomreModel showRoomCustomreModel) {
