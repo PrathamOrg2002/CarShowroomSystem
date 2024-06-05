@@ -5,15 +5,16 @@ import car_showroom_model.org.ShowroomCarBillModel;
 
 public class ShowroomCarBillRepository extends DBHelper{
 
-	public boolean addDataInCarCustJoin(ShowroomCarBillModel sCBillModel) {
-		// TODO Auto-generated method stub
+	public boolean addDataInBill(ShowroomCarBillModel sCBillModel) {
 		try
 		{
-			pstmt=conn.prepareStatement("insert into showCustCarjoin values (?,?)");
-			pstmt.setInt(1, sCBillModel.getCustId());
-			pstmt.setInt(2, sCBillModel.getCarId());
-			int value=pstmt.executeUpdate();
-			return value>0 ? true:false;
+			String addDataIntoCarCustJoinAndBill=p.getProperty("addDataIntoCarCustJoinAndBill");
+			cs=conn.prepareCall(addDataIntoCarCustJoinAndBill);
+			cs.setInt(1, sCBillModel.getCarId());
+			cs.setInt(2, sCBillModel.getCustId());
+			cs.setInt(3, sCBillModel.getIncurance());
+			cs.setLong(4, sCBillModel.getTotal());
+			return !cs.execute();
 		}
 		catch(Exception ex)
 		{

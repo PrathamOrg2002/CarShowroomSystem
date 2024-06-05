@@ -6,10 +6,10 @@ import car_showroom_model.org.ShowRoomCustomreModel;
 public class ShowroomCustomerRepository extends DBHelper{
 
 	public boolean AddShowRCustInfo(ShowRoomCustomreModel scModel) {
-		// TODO Auto-generated method stub
 		try
 		{
-			pstmt=conn.prepareStatement("insert into showroomcust values('0',?,?,?)");
+			String insertInShowroomCust =p.getProperty("insertInShowroomCust");
+			pstmt=conn.prepareStatement(insertInShowroomCust);
 			pstmt.setString(1, scModel.getCustName());
 			pstmt.setString(2, scModel.getContact());
 			pstmt.setString(3, scModel.getCity());
@@ -21,27 +21,15 @@ public class ShowroomCustomerRepository extends DBHelper{
 			return false;
 		}
 	}
-	public boolean checkDiscount(int cid) {
-		try
-		{
-			pstmt=conn.prepareStatement("select count(scId) from showcustcarjoin where scId=?");
-			pstmt.setInt(1, cid);
-			rs=pstmt.executeQuery();
-			if(rs.next())
-			{
-				return rs.getInt(1)>3 ? true:false;
-			}
-		}
-		catch(Exception ex)
-		{
-			System.out.println("error in Check Discount method "+ex);
-		}
+
+	public boolean checkDiscount() {
 		return false;
 	}
 
 	public int getCustIdByName(ShowRoomCustomreModel sRCModel) {
 		try {
-			pstmt=conn.prepareStatement("select scId from showroomcust where custName=? and contact=?");
+			String selectIdByCustNameContact=p.getProperty("selectIdByCustNameContact");
+			pstmt=conn.prepareStatement(selectIdByCustNameContact);
 			pstmt.setString(1, sRCModel.getCustName());
 			pstmt.setString(2,sRCModel.getContact());
 			rs=pstmt.executeQuery();
@@ -56,8 +44,8 @@ public class ShowroomCustomerRepository extends DBHelper{
 		}catch(Exception ex)
 		{
 			System.out.println("Error in get Cust Id by Name "+ex);
+			return -1;
 		}
-		return 0;
 	}
 
 }

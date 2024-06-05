@@ -7,8 +7,9 @@ public class ServicingCarModel {
 	private int id;
 	private String carnumber;
 	private String carmodelname;
-	ArrayList<CarIssue>al=null;
-	boolean carstatus=false;
+	ArrayList<CarIssue> al = null;
+	boolean carstatus = false;
+
 	public ArrayList<CarIssue> getAl() {
 		return al;
 	}
@@ -16,7 +17,6 @@ public class ServicingCarModel {
 	public void setAl(ArrayList<CarIssue> al) {
 		this.al = al;
 	}
-
 
 	public String getCarnumber() {
 		return carnumber;
@@ -34,9 +34,7 @@ public class ServicingCarModel {
 		this.carmodelname = carmodelname;
 	}
 
-
-
-	public ServicingCarModel( String carnumber,String modelname,ArrayList<CarIssue> al) {
+	public ServicingCarModel(String carnumber, String modelname, ArrayList<CarIssue> al) {
 
 		this.carnumber = carnumber;
 		this.carmodelname = modelname;
@@ -62,7 +60,6 @@ public class ServicingCarModel {
 	public void setModelname(String modelname) {
 		this.carmodelname = modelname;
 	}
-
 
 	public boolean isCar_status() {
 		return carstatus;
