@@ -90,14 +90,29 @@ public class CarShowroomClient {
 							System.out.println("No Cars in Database");
 						}
 						break;
-					case 2:
-						if (sCService.checkDiscount()) {
-							System.out.println("🎉🎉🎉 Congratulations 🎉🎉🎉");
-							System.out.println("you have 5000/- Discount on Car");
-						} else {
-							System.out.println("You don't have a Discount on Car ");
-							System.out.println("🤔🤔 Better luck next time 🤔🤔");
+					case 2:  		//Checkout Discount Here...
+						System.out.println("Enter the Customer Name For Discount ");
+						String cname=sc.nextLine();
+						System.out.println("Enter the Customer Contact ");
+						String dcontact=sc.nextLine();
+						ShowRoomCustomreModel srCModel=new ShowRoomCustomreModel();
+						srCModel.setCustName(cname);
+						srCModel.setContact(dcontact);
+						int custId = sCService.getCustIdByName(srCModel);
+						if (custId != -1) {
+							if (sCService.checkDiscount(custId)) {
+								System.out.println("🎉🎉🎉 Congratulations 🎉🎉🎉");
+								System.out.println("you have 5000/- Discount on Car");
+							} else {
+								System.out.println("You don't have a Discount on Car ");
+								System.out.println("🤔🤔 Better luck next time 🤔🤔");
+							}
 						}
+						else
+						{
+							System.out.println("🙏 Customer not found Please Fill Enquiry Form 🙏");
+						}
+						
 						break;
 					case 3: // Gate Estimate of Car
 						System.out.println("  Car Estimate  ");
@@ -143,7 +158,7 @@ public class CarShowroomClient {
 						String contact = sc.nextLine();
 						System.out.println("Enter the City ");
 						String city = sc.nextLine();
-						int custId = sCService.getCustIdByName(new ShowRoomCustomreModel(custName, contact, city));
+						custId = sCService.getCustIdByName(new ShowRoomCustomreModel(custName, contact, city));
 						if (custId != -1) {
 							System.out.println("Enter Car Name");
 							String carName = sc.nextLine();

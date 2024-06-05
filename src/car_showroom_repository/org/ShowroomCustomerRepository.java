@@ -1,5 +1,7 @@
 package car_showroom_repository.org;
 
+import java.net.Socket;
+
 import car_showroom_config.org.DBHelper;
 import car_showroom_model.org.ShowRoomCustomreModel;
 
@@ -22,8 +24,28 @@ public class ShowroomCustomerRepository extends DBHelper{
 		}
 	}
 
-	public boolean checkDiscount() {
-		return false;
+	public boolean checkDiscount(int custId) {
+		try
+		{
+			String checkDiscountByNumOfBill=p.getProperty("checkDiscountByNumOfBill");
+			pstmt=conn.prepareStatement(checkDiscountByNumOfBill);
+			pstmt.setInt(1, custId);
+			rs=pstmt.executeQuery();
+			if(rs.next())
+			{
+				int count=rs.getInt(1);
+				return count%2==0 ? true :false;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		catch(Exception ex)
+		{
+			System.out.println("Error in check Discount "+ex);
+			return false;
+		}
 	}
 
 	public int getCustIdByName(ShowRoomCustomreModel sRCModel) {
