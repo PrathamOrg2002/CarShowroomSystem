@@ -8,12 +8,13 @@ public class ShowroomCarBillRepository extends DBHelper{
 	public boolean addDataInBill(ShowroomCarBillModel sCBillModel) {
 		try
 		{
-			String insertInShowCustCarJoin=p.getProperty("insertInShowCustCarJoin");
-			pstmt=conn.prepareStatement(insertInShowCustCarJoin);
-			pstmt.setInt(1, sCBillModel.getCustId());
-			pstmt.setInt(2, sCBillModel.getCarId());
-			int value=pstmt.executeUpdate();
-			return value>0 ? true:false;
+			String addDataIntoCarCustJoinAndBill=p.getProperty("addDataIntoCarCustJoinAndBill");
+			cs=conn.prepareCall(addDataIntoCarCustJoinAndBill);
+			cs.setInt(1, sCBillModel.getCarId());
+			cs.setInt(2, sCBillModel.getCustId());
+			cs.setInt(3, sCBillModel.getIncurance());
+			cs.setLong(4, sCBillModel.getTotal());
+			return !cs.execute();
 		}
 		catch(Exception ex)
 		{
