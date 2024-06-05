@@ -10,4 +10,5 @@ public class DBHelper {
 	protected PreparedStatement pstmt = DBConfig.getPstmt();
 	protected ResultSet rs = DBConfig.getRs();
 	protected Properties p = DBConfig.getp();
+	protected CallableStatement cs=DBConfig.getCallStatement();
 }

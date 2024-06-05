@@ -89,7 +89,6 @@ public class CarShowroomClient {
 						} else {
 							System.out.println("No Cars in Database");
 						}
-
 						break;
 					case 2:
 						if (sCService.checkDiscount()) {
@@ -174,6 +173,8 @@ public class CarShowroomClient {
 											+ "Insurance Price :-" + shRInsModel.getPrice());
 									System.out.println("Total Bill :- " + (shRInsModel.getPrice() + carPrice));
 									ShowroomCarBillModel sCBillModel = new ShowroomCarBillModel(custId, carId);
+									sCBillModel.setIncurance(insId);
+									sCBillModel.setTotal((shRInsModel.getPrice() + carPrice));
 									if (sCBillService.addDataInBill(sCBillModel)) {
 										System.out.println("😊😊 Bill Add succesfully 😊😊");
 									} else {
@@ -189,7 +190,7 @@ public class CarShowroomClient {
 							}
 
 						} else {
-							System.out.println("Customer not found");
+							System.out.println("Customer not found Please Fill Enquiry Form");
 						}
 						break;
 					case 5:
