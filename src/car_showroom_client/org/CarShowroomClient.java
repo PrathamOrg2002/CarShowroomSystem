@@ -23,7 +23,7 @@ import car_showroom_service.org.ShowroomInsuranceService;
 import java.util.*;
 
 public class CarShowroomClient {
-	public static void main(String[] args) {
+	public static void main(String[] args)throws Exception {
 		Scanner sc = new Scanner(System.in);
 		CarMasterService cMService = new CarMasterService();
 		LoginService lServices = new LoginService();
@@ -298,12 +298,12 @@ public class CarShowroomClient {
 								System.out.println("\n==============⚙️================⚙️==============");
 								System.out.println("1. Add new Customer");
 								System.out.println("2. Add new problems/issue/modification element of car");
-								System.out.println(
-										"3. Show all problems/issue/modification element of car present in database");
+								System.out.println("3. Show all problems/issue/modification element of car present in database");
 								System.out.println("4. Show all Customer");
-								System.out.println("5. Search car by id");
+								System.out.println("5. Search Customer/Car");
 								System.out.println("6. Change car status");
-								System.out.println("7. Exit");
+								System.out.println("7. Modify details");
+								System.out.println("8. Exit");
 								System.out.println("==============⚙️================⚙️==============");
 								System.out.print("Enter your choice: ");
 								choice3 = sc.nextInt();
@@ -371,6 +371,7 @@ public class CarShowroomClient {
 									b = scs.isShowAllServicigCutomer();
 									break;
 								case 5:
+									System.out.println("What do you want to search--> 1)Car 2)Customer");
 									System.out.println("Enter car id");
 									int carid = sc.nextInt();
 									sc.nextLine();
@@ -392,13 +393,41 @@ public class CarShowroomClient {
 									}
 									break;
 								case 7:
+									 option="";
+									do {
+										System.out.println("************************************");
+										System.out.println("1.Update Customer Details");
+										System.out.println("2.Update Car Details");
+										System.out.println("3.Update Issue Details");
+										System.out.println("4.Delete Customer Details");
+										System.out.println("5.Delete Car Details");
+										System.out.println("6.Delete Issue Details");
+										System.out.println("7.Exit");
+										System.out.println("************************************");
+										System.out.println("Enter your choice: ");
+										int ch=sc.nextInt();
+										sc.nextLine();
+										switch(ch)
+										{
+										case 1:
+											System.out.println("Enter id of customer");
+											break;
+										default:System.out.println("Enter correct choice...");
+										}
+										
+									System.out.println("Do you want to modify more details (yes/no)");
+									option=sc.nextLine();
+									}while(option.equals("yes"));
+									
+									break;
+								case 8:
 									System.out.println("Exited from Servicing Center 🙏🏻");
 									break;
 								default:
 									System.out.println("Enter correct choice");
 								}
 
-							} while (choice3 != 7);
+							} while (choice3 != 8);
 						} // Servicing center end
 						else {
 							System.out.println("Not permitted to enter");
