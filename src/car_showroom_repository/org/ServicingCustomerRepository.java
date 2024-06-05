@@ -12,23 +12,25 @@ public class ServicingCustomerRepository extends DBHelper {
 	public boolean isAddServicigCutomer(ServicingCustomerModel customermodel) {
 		
 		try {
-			
-			pstmt=conn.prepareStatement("insert into ServicingCarModel (id,carnumber,carmodelname) values('0',?,?);");
+			String insertIdNumNamInServicingCarModel=p.getProperty("insertIdNumNamInServicingCarModel");
+			pstmt=conn.prepareStatement(insertIdNumNamInServicingCarModel);
 			pstmt.setString(1, customermodel.getModel().getCarnumber());
 			pstmt.setString(2, customermodel.getModel().getCarmodelname());
 			int value=pstmt.executeUpdate();
 			
 			if(value>0){
 				System.out.println("car of customer added sucessfully");
-				pstmt=conn.prepareStatement("insert into ServicingCustomerModel (scid,cname,contact) values('0',?,?);");
+				String insertIdNamConInSerCustModel=p.getProperty("insertIdNamConInSerCustModel");
+				pstmt=conn.prepareStatement(insertIdNamConInSerCustModel);
 				pstmt.setString(1, customermodel.getName());
 				pstmt.setString(2, customermodel.getContact());
 				value=pstmt.executeUpdate();
 				if(value>0)
 				{
 					System.out.println("customer added sucessfully");
+					String insertCarCusomerJoin=p.getProperty("insertCarCusomerJoin");
 					int cid=getCustomerIdByName(customermodel.getName());
-					pstmt=conn.prepareStatement("insert into carcusomerjoin values(?,?);");
+					pstmt=conn.prepareStatement(insertCarCusomerJoin);
 					ServicingCarService scs=new ServicingCarService();
 					int carid=scs.getCarIdByNumber(customermodel.getModel().getCarnumber());
 					pstmt.setInt(1, carid);
@@ -46,36 +48,42 @@ public class ServicingCustomerRepository extends DBHelper {
 					for(CarIssue ci:al)
 					{
 						int cid1=ci.getIssueid();
-						pstmt=conn.prepareStatement("insert into carissuejoin values(?,?);");
+						String insertInCarIssueJoin=p.getProperty("insertInCarIssueJoin");
+						pstmt=conn.prepareStatement(insertInCarIssueJoin);
 						pstmt.setInt(1,carid);
 						pstmt.setInt(2,cid1);
 						value=pstmt.executeUpdate();
 						
 					}
-					
+					return true;
 				}
 				else
 				{
 					System.out.println("Error while adding customer");
+					return false;
 				}
+				
 			}
 			else
 			{
 				System.out.println("Error while adding carmodel");
+				return false;
 			}
 			
 		}
 		catch(Exception ex)
 		{
 			System.out.println("Error in Adding car Method!!! "+ex);
+			return false;
 		}
-		return false;
+		
 	}
 
 	public int getCustomerIdByName(String name) {
 		try
 		{
-			pstmt=conn.prepareStatement("select scid from ServicingCustomerModel where cname=?;");
+			String selectIdByCustName=p.getProperty("selectIdByCustName");
+			pstmt=conn.prepareStatement(selectIdByCustName);
 			pstmt.setString(1,name);
 			rs=pstmt.executeQuery();
 			if(rs.next())
@@ -94,9 +102,10 @@ public class ServicingCustomerRepository extends DBHelper {
 	public boolean isShowAllServicigCutomer() {
 		try
 		{
-			pstmt=conn.prepareStatement(" select * from ServicingCustomerModel am inner join carcusomerjoin cj on cj.scid=am.scid inner join servicingcarmodel sc on sc.id=cj.id;");
+			String selectAllCustAndCar=p.getProperty("selectAllCustAndCar");
+			pstmt=conn.prepareStatement(selectAllCustAndCar);
 			rs=pstmt.executeQuery();
-			System.out.println("scid\tcname\tcontact\t\trecurr\tcarid\tcarno.\tcarmodelname\tcarstatus");
+			System.out.println("Id\tName\tContact\t\trecurr\tCarid\tCarno\tCarName\tCarstatus");
 			while(rs.next())
 			{
 				System.out.println(rs.getInt(1)+"\t"+rs.getString(2)+"\t"+rs.getString(3)+"\t"+rs.getInt(4)+"\t"+rs.getInt(7)+"\t"+rs.getString(8)+"\t"+rs.getString(9)+"\t"+rs.getInt(10));

@@ -8,9 +8,9 @@ import car_showroom_model.org.CarMasterModel;
 public class CarMasterRepository extends DBHelper{
 
 	public boolean addCarData(CarMasterModel cMModel) {
-		// TODO Auto-generated method stub
 		try {
-			pstmt=conn.prepareStatement("insert into carmaster values('0' ,?,?,?);");
+			String insertInCarmaster=p.getProperty("insertInCarmaster");
+			pstmt=conn.prepareStatement(insertInCarmaster);
 			pstmt.setString(1, cMModel.getCarName());
 			pstmt.setLong(2, cMModel.getCarPrice());
 			pstmt.setInt(3, cMModel.getNoOfCar());
@@ -25,11 +25,11 @@ public class CarMasterRepository extends DBHelper{
 	}
 
 	public ArrayList<CarMasterModel> getAllCars() {
-		// TODO Auto-generated method stub
 		ArrayList<CarMasterModel> al= new ArrayList<CarMasterModel>();
 		try
 		{
-			pstmt=conn.prepareStatement("select *from carmaster ;");
+			String selectAllcarmaster=p.getProperty("selectAllcarmaster");
+			pstmt=conn.prepareStatement(selectAllcarmaster);
 			rs=pstmt.executeQuery();
 			while(rs.next())
 			{
@@ -40,21 +40,21 @@ public class CarMasterRepository extends DBHelper{
 				cmm.setNoOfCar(rs.getInt(4));
 				al.add(cmm);
 			}
-			return al.size()>0 ? al:null;
-				
+			return al.size()>0 ? al:null;	
 		}
 		catch(Exception ex)
 		{
 			System.out.println("Error in Get Cars method !!?? "+ex);
+			return null;
 		}
-		return null;
+		
 	}
 
 	public long getShowCarPriceById(int carId) {
-		// TODO Auto-generated method stub
 		try
 		{
-			pstmt=conn.prepareStatement("select carPrice from carmaster where carId=?");
+			String selctCarPriceFromCarId=p.getProperty("selctCarPriceFromCarId");
+			pstmt=conn.prepareStatement(selctCarPriceFromCarId);
 			pstmt.setInt(1, carId);
 			rs=pstmt.executeQuery();
 			if(rs.next())
@@ -70,15 +70,17 @@ public class CarMasterRepository extends DBHelper{
 		catch(Exception ex)
 		{
 			System.out.println("Error in get Showroom Car Price By Id "+ex);
-		}
-		return -1;
-	}
 
+			return -1;
+		}
+		
+	}
+  
 	public String getShowCarNameById(int carId) {
-		// TODO Auto-generated method stub
 		try
 		{
-			pstmt=conn.prepareStatement("select carName from carmaster where carId=?");
+			String selectCarNameByCarId=p.getProperty("selectCarNameByCarId");
+			pstmt=conn.prepareStatement(selectCarNameByCarId);
 			pstmt.setInt(1, carId);
 			rs=pstmt.executeQuery();
 			if(rs.next())
@@ -94,14 +96,16 @@ public class CarMasterRepository extends DBHelper{
 		catch(Exception ex)
 		{
 			System.out.println("Error in get Showroom Car Price By Id "+ex);
+			return null;
 		}
-		return null;
+		
 	}
 
 	public long getShowCarPriceByName(String carName) {
 		try
 		{
-			pstmt=conn.prepareStatement("select carPrice from carmaster where carName=?");
+			String selectCarPriceByCarName=p.getProperty("selectCarPriceByCarName");
+			pstmt=conn.prepareStatement(selectCarPriceByCarName);
 			pstmt.setString(1, carName);
 			rs=pstmt.executeQuery();
 			if(rs.next())
@@ -117,15 +121,17 @@ public class CarMasterRepository extends DBHelper{
 		catch(Exception ex)
 		{
 			System.out.println("Error in get Showroom Car Price By Name "+ex);
+			return -1;
 		}
-		return -1;
+		
 	}
 
 	public int getCarIdbyName(String carName) {
-		// TODO Auto-generated method stub
 		try
 		{
-			pstmt=conn.prepareStatement("select carId from carmaster where carName=?");
+			String selectCarIdFromCarName=p.getProperty("selectCarIdFromCarName");
+			pstmt=conn.prepareStatement(selectCarIdFromCarName);
+
 			pstmt.setString(1, carName);
 			rs=pstmt.executeQuery();
 			if(rs.next())
@@ -135,14 +141,13 @@ public class CarMasterRepository extends DBHelper{
 			else
 			{
 				return -1;
-			}
-				
+			}	
+
 		}
 		catch(Exception ex)
 		{
 			System.out.println("Error in get Car Id By Name "+ex);
-		}
-		return -1;
+			return -1;
+		}		
 	}
-
 }

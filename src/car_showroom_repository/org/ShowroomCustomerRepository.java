@@ -1,15 +1,17 @@
 package car_showroom_repository.org;
 
+import java.net.Socket;
+
 import car_showroom_config.org.DBHelper;
 import car_showroom_model.org.ShowRoomCustomreModel;
 
 public class ShowroomCustomerRepository extends DBHelper{
 
 	public boolean AddShowRCustInfo(ShowRoomCustomreModel scModel) {
-		// TODO Auto-generated method stub
 		try
 		{
-			pstmt=conn.prepareStatement("insert into showroomcust values('0',?,?,?)");
+			String insertInShowroomCust =p.getProperty("insertInShowroomCust");
+			pstmt=conn.prepareStatement(insertInShowroomCust);
 			pstmt.setString(1, scModel.getCustName());
 			pstmt.setString(2, scModel.getContact());
 			pstmt.setString(3, scModel.getCity());
@@ -22,14 +24,34 @@ public class ShowroomCustomerRepository extends DBHelper{
 		}
 	}
 
-	public boolean checkDiscount() {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean checkDiscount(int custId) {
+		try
+		{
+			String checkDiscountByNumOfBill=p.getProperty("checkDiscountByNumOfBill");
+			pstmt=conn.prepareStatement(checkDiscountByNumOfBill);
+			pstmt.setInt(1, custId);
+			rs=pstmt.executeQuery();
+			if(rs.next())
+			{
+				int count=rs.getInt(1);
+				return count%2==0 ? true :false;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		catch(Exception ex)
+		{
+			System.out.println("Error in check Discount "+ex);
+			return false;
+		}
 	}
 
 	public int getCustIdByName(ShowRoomCustomreModel sRCModel) {
 		try {
-			pstmt=conn.prepareStatement("select scId from showroomcust where custName=? and contact=?");
+			String selectIdByCustNameContact=p.getProperty("selectIdByCustNameContact");
+			pstmt=conn.prepareStatement(selectIdByCustNameContact);
 			pstmt.setString(1, sRCModel.getCustName());
 			pstmt.setString(2,sRCModel.getContact());
 			rs=pstmt.executeQuery();
@@ -44,8 +66,8 @@ public class ShowroomCustomerRepository extends DBHelper{
 		}catch(Exception ex)
 		{
 			System.out.println("Error in get Cust Id by Name "+ex);
+			return -1;
 		}
-		return 0;
 	}
 
 }
