@@ -23,4 +23,19 @@ public class ServicingCarService {
 
 		return scr.changeCarStatusNoById(carid);
 	}
+	
+	public boolean getCarByCustId(int id) {
+		
+		return scr.getCarByCustId(id);
+	}
+
+	public boolean isUpdateCarById(int carid) {
+		
+		return scr.isUpdateCarById(carid);
+	}
+
+	public boolean isUpdateCarByCusId(int id) {
+		
+		return scr.isUpdateCarByCusId(id);
+	}
 }

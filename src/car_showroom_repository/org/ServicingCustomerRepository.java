@@ -1,6 +1,8 @@
 package car_showroom_repository.org;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import car_showroom_config.org.DBHelper;
 import car_showroom_model.org.CarIssue;
@@ -119,4 +121,109 @@ public class ServicingCustomerRepository extends DBHelper {
 		}
 	}
 
+	public boolean getCustomerByName(String name) {
+		try
+		{
+			String selectCustByName=p.getProperty("selectCustByName");
+			pstmt=conn.prepareStatement(selectCustByName);
+			pstmt.setString(1,name);
+			rs=pstmt.executeQuery();
+			System.out.println("Id\tName\tContact\t\trecurr");
+			while(rs.next())
+			{
+				System.out.println(rs.getInt(1)+"\t"+rs.getString(2)+"\t"+rs.getString(3)+"\t"+rs.getInt(4));
+			}
+			return true;
+		}
+		catch(Exception e)
+		{
+			System.out.println("Error "+e);
+			return false;
+		}
+		
+	}
+	
+	public boolean getCustomerById(int id) {
+		try
+		{
+			String selectCustById=p.getProperty("selectCustById");
+			pstmt=conn.prepareStatement(selectCustById);
+			pstmt.setInt(1,id);
+			rs=pstmt.executeQuery();
+			System.out.println("Id\tName\tContact\t\trecurr");
+			while(rs.next())
+			{
+				System.out.println(rs.getInt(1)+"\t"+rs.getString(2)+"\t"+rs.getString(3)+"\t"+rs.getInt(4));
+			}
+			return true;
+		}
+		catch(Exception e)
+		{
+			System.out.println("Error "+e);
+			return false;
+		}
+		
+	}
+
+	public boolean isupdateCustomerByName(String name) {
+		getCustomerByName(name);
+		Scanner sc2=new Scanner(System.in);
+		System.out.println("choose id from above customer you want to update");
+		int id=sc2.nextInt();
+		sc2.nextLine();
+		System.out.println("Enter update name contact of customer");
+		String namex=sc2.nextLine();
+		String contactx=sc2.nextLine();
+		String updateCustomerByName = p.getProperty("updateCustomerByName");
+		try {
+			pstmt=conn.prepareStatement(updateCustomerByName);
+			pstmt.setString(1, namex);
+			pstmt.setString(2, contactx);
+			pstmt.setString(3, name);
+			int value=pstmt.executeUpdate();
+			if(value>0)
+			{
+				System.out.println("Data updated succesfully...");
+				return true;
+			}
+			else
+			{
+				System.out.println("Data not updated...");
+				return false;
+			}
+		} catch (Exception e) {
+			System.out.println("Error is "+e);
+			return false;
+		}
+		
+	}
+	
+	public boolean isUpdateCustomerById(int id) {
+		Scanner sc2=new Scanner(System.in);
+		System.out.println("Enter updated name, contact of customer");
+		String namex=sc2.nextLine();
+		String contactx=sc2.nextLine();
+		String updateCustomerById = p.getProperty("updateCustomerById");
+		try {
+			pstmt=conn.prepareStatement(updateCustomerById);
+			pstmt.setString(1, namex);
+			pstmt.setString(2, contactx);
+			pstmt.setInt(3, id);
+			int value=pstmt.executeUpdate();
+			if(value>0)
+			{
+				System.out.println("Data updated succesfully...");
+				return true;
+			}
+			else
+			{
+				System.out.println("Data not updated...");
+				return false;
+			}
+		} catch (Exception e) {
+			System.out.println("Error is "+e);
+			return false;
+		}
+		
+	}
 }

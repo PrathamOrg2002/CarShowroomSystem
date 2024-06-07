@@ -21,4 +21,24 @@ public class ServicingCustomerService {
 		return scr.isShowAllServicigCutomer();
 	}
 
+	public boolean getCustomerByName(String name) {
+		
+		return scr.getCustomerByName(name);
+	}
+	
+	public boolean getCustomerById(int id) {
+		
+		return scr.getCustomerById(id);
+	}
+
+	public boolean isupdateCustomerByName(String name) {
+		
+		return scr.isupdateCustomerByName(name);
+	}
+
+	public boolean isUpdateCustomerById(int id) {
+		
+		return scr.isUpdateCustomerById(id);
+	}
+
 }

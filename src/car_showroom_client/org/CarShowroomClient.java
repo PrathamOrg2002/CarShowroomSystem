@@ -371,7 +371,11 @@ public class CarShowroomClient {
 								case 2:
 									System.out.println("Enter issue name");
 									String issuename = sc.nextLine();
-									CarIssue imodel = new CarIssue(issuename);
+									System.out.println("Enter price");
+									int price = sc.nextInt();
+									System.out.println("Enter quantity");
+									int quantity = sc.nextInt();
+									CarIssue imodel = new CarIssue(issuename,price,quantity);
 									b = cis.isAddIssue(imodel);
 									if (b) {
 										System.out.println("Issue Added Succesfully");
@@ -386,15 +390,54 @@ public class CarShowroomClient {
 									b = scs.isShowAllServicigCutomer();
 									break;
 								case 5:
-									System.out.println("What do you want to search--> 1)Car 2)Customer");
-									System.out.println("Enter car id");
-									int carid = sc.nextInt();
+									System.out.print("What do you want to search--> 1)Car 2)Customer\nEnter option number: ");
+									int no=sc.nextInt();
 									sc.nextLine();
-									b = scservice.getCarById(carid);
+									if(no==1)
+									{
+										System.out.print("How do you want to search car by 1)CarId 2)CustomerId\nEnter option number: ");
+										int no1=sc.nextInt();
+										sc.nextLine();
+										if(no1==1)
+										{
+											System.out.println("Enter car id");
+											int carid = sc.nextInt();
+											sc.nextLine();
+											b = scservice.getCarById(carid);
+										}
+										else if(no1==2)
+										{
+											System.out.println("Enter id of customer");
+											int id=sc.nextInt();
+											sc.nextLine();
+											b=scservice.getCarByCustId(id);
+										}
+										
+									}
+									else if(no==2)
+									{
+										System.out.print("How do you want to search customer by 1)name 2)id\nEnter option number: ");
+										int no1=sc.nextInt();
+										sc.nextLine();
+										if(no1==1)
+										{
+											System.out.println("Enter name of customer");
+											name=sc.nextLine();
+											b=scs.getCustomerByName(name);
+										}
+										else if(no1==2)
+										{
+											System.out.println("Enter id of customer");
+											int id=sc.nextInt();
+											sc.nextLine();
+											b=scs.getCustomerById(id);
+										}
+									}
+									
 									break;
 								case 6:
 									System.out.println("Enter car id");
-									carid = sc.nextInt();
+									int carid = sc.nextInt();
 									sc.nextLine();
 									b = scservice.getCarById(carid);
 									if (b) {
@@ -417,7 +460,6 @@ public class CarShowroomClient {
 										System.out.println("4.Delete Customer Details");
 										System.out.println("5.Delete Car Details");
 										System.out.println("6.Delete Issue Details");
-										System.out.println("7.Exit");
 										System.out.println("************************************");
 										System.out.println("Enter your choice: ");
 										int ch=sc.nextInt();
@@ -425,7 +467,74 @@ public class CarShowroomClient {
 										switch(ch)
 										{
 										case 1:
-											System.out.println("Enter id of customer");
+											System.out.print("How do you want to update customer by 1)name 2)id\nEnter option number: ");
+											int no1=sc.nextInt();
+											sc.nextLine();
+											if(no1==1)
+											{
+												System.out.println("Enter name of customer");
+												name=sc.nextLine();
+												b=scs.isupdateCustomerByName(name);
+											}
+											else if(no1==2)
+											{
+												System.out.println("Enter id of customer");
+												int id=sc.nextInt();
+												sc.nextLine();
+												b=scs.isUpdateCustomerById(id);
+											}
+											break;
+										case 2:
+											System.out.print("How do you want to update car by 1)CarId 2)CustomerId\nEnter option number: ");
+											no1=sc.nextInt();
+											sc.nextLine();
+											if(no1==1)
+											{
+												System.out.println("Enter car id");
+												carid = sc.nextInt();
+												sc.nextLine();
+												b = scservice.isUpdateCarById(carid);
+											}
+											else if(no1==2)
+											{
+												System.out.println("Enter id of customer");
+												int id=sc.nextInt();
+												sc.nextLine();
+												b=scservice.isUpdateCarByCusId(id);
+											}
+											break;
+										case 3:
+											System.out.print("How do you want to update issue by 1)name 2)id\nEnter option number: ");
+											no1=sc.nextInt();
+											sc.nextLine();
+											if(no1==1)
+											{
+												System.out.println("Enter name of issue");
+												name=sc.nextLine();
+												b=cis.isupdateIssueByName(name);
+											}
+											else if(no1==2)
+											{
+												System.out.println("Enter id of issue");
+												int id=sc.nextInt();
+												sc.nextLine();
+												b=cis.isupdateIssueById(id);
+											}
+											break;
+										case 4:
+											System.out.println("Enter id of customer to delete");
+											int id=sc.nextInt();
+											b=scs.getCustomerById(id);
+											if(b)
+											{
+												System.out.println("Do you want to delete this customer (yes/no)");
+												option=sc.nextLine();
+												if(option.equals("yes"))
+												{
+													//b=scs.deletecustomerById(id);
+												}
+											}
+											
 											break;
 										default:System.out.println("Enter correct choice...");
 										}

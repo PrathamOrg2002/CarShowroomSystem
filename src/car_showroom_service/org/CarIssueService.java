@@ -19,4 +19,12 @@ public class CarIssueService {
 		return cisrepo.isShowAllIssue();
 	}
 
+	public boolean isupdateIssueByName(String name) {
+		return cisrepo.isupdateIssueByName(name);
+	}
+
+	public boolean isupdateIssueById(int id) {
+		return cisrepo.isupdateIssueById(id);
+	}
+
 }
