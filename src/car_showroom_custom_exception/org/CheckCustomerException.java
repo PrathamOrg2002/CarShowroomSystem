@@ -2,7 +2,7 @@ package car_showroom_custom_exception.org;
 
 public class CheckCustomerException {
 	
-	public static void checkCustName(String name)throws RunTimeCustomException
+	public static void checkCustName(String name)
 	{
 		for(int i=0;i<name.length();i++)
 		{

@@ -32,4 +32,17 @@ public class CarMasterService {
 		return cMRepo.getCarIdbyName(carName);
 	}
 
+	public int getCarIdAuto() {
+		return cMRepo.getCarIdAuto();
+	}
+
+	public CarMasterModel getCarFeature(int carId) {
+		return cMRepo.getCarFeature(carId);
+	}
+
+	public ArrayList<CarMasterModel> getCarByPrice(long carPrice) {
+		// TODO Auto-generated method stub
+		return cMRepo.getCarByPrice(carPrice);
+	}
+
 }

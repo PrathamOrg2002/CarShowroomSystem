@@ -10,11 +10,16 @@ public class CarMasterRepository extends DBHelper{
 	public boolean addCarData(CarMasterModel cMModel) {
 		try {
 			String insertInCarmaster=p.getProperty("insertInCarmaster");
-			pstmt=conn.prepareStatement(insertInCarmaster);
-			pstmt.setString(1, cMModel.getCarName());
-			pstmt.setLong(2, cMModel.getCarPrice());
-			pstmt.setInt(3, cMModel.getNoOfCar());
-			return pstmt.executeUpdate()>0 ? true:false;
+			cs=conn.prepareCall(insertInCarmaster);
+			cs.setInt(1, cMModel.getCarId());
+			cs.setString(2, cMModel.getCarName());
+			cs.setLong(3, cMModel.getCarPrice());
+			cs.setInt(4, cMModel.getNoOfCar());
+			cs.setLong(5, cMModel.getCarCC());
+			cs.setInt(6, cMModel.getMilage());
+			cs.setString(7, cMModel.getFuel());
+			boolean b=cs.execute();
+			return !b;
 			
 		}
 		catch(Exception ex)
@@ -149,5 +154,82 @@ public class CarMasterRepository extends DBHelper{
 			System.out.println("Error in get Car Id By Name "+ex);
 			return -1;
 		}		
+	}
+
+	public int getCarIdAuto() {
+		try
+		{
+			String getCarIDAuto=p.getProperty("getCarIDAuto");
+			pstmt=conn.prepareStatement(getCarIDAuto);
+			rs=pstmt.executeQuery();
+			if(rs.next())
+			{
+				return rs.getInt(1)+1;
+			}
+			else
+			{
+				return -1;
+			}	
+
+		}
+		catch(Exception ex)
+		{
+			System.out.println("Error in get Car Id Auto "+ex);
+			return -1;
+		}
+	}
+
+	public CarMasterModel getCarFeature(int carId) {
+		try
+		{
+			String getCarFeature=p.getProperty("getCarFeature");
+			pstmt=conn.prepareStatement(getCarFeature);
+			pstmt.setInt(1, carId);
+			rs=pstmt.executeQuery();
+			if(rs.next())
+			{
+				CarMasterModel cmm= new CarMasterModel();
+				cmm.setCarName(rs.getString(1));
+				cmm.setCarCC(rs.getLong(2));
+				cmm.setMilage(rs.getInt(3));
+				cmm.setFuel(rs.getString(4));
+				return cmm;
+			}
+			else
+			{
+				return null;
+			}
+		}
+		catch(Exception ex)
+		{
+			System.out.println("Error in Get Car Features !!?? "+ex);
+			ex.printStackTrace();
+			return null;
+		}
+	}
+
+	public ArrayList<CarMasterModel> getCarByPrice(long carPrice) {
+		ArrayList<CarMasterModel> al= new ArrayList<CarMasterModel>();
+		try
+		{
+			pstmt=conn.prepareStatement(p.getProperty("getCarByPrice"));
+			pstmt.setLong(1, carPrice);
+			rs=pstmt.executeQuery();
+			while(rs.next())
+			{
+				CarMasterModel cMM= new CarMasterModel();
+				cMM.setCarName(rs.getString("carName"));
+				cMM.setCarPrice(rs.getLong("carPrice"));
+				al.add(cMM);
+			}
+			return al.size()>0 ? al:null;
+		}
+		catch(Exception ex)
+		{
+			System.out.println("Error in getCarByPrice method "+ex);
+			ex.printStackTrace();
+			return null;
+		}
+		
 	}
 }

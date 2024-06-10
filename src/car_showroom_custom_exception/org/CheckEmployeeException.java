@@ -15,12 +15,9 @@ public class CheckEmployeeException {
 	}
 	public static void checkEmpPass(String pass)
 	{
-		for(int i=0;i<pass.length();i++)
-		{
-			if( pass.length()>=6 && pass.length()<=10 )
+			if( !(pass.length()>=6 && pass.length()<=10) )
 			{
 				throw new RunTimeCustomException("🤐🤐 Employee Pass Word is Invalid 🙏 Please Enter the Valid Pass Word (length between 6 to 10 ) 🤐🤐");
 			}
-		}
 	}
 }
