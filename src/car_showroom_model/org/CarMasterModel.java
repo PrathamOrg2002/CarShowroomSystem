@@ -5,6 +5,9 @@ public class CarMasterModel {
 	private String carName;
 	private long carPrice;
 	private int noOfCar;
+	private String fuel;
+	private long carCC;
+	private int milage;
 
 	public CarMasterModel() {
 
@@ -46,6 +49,30 @@ public class CarMasterModel {
 
 	public void setNoOfCar(int noOfCar) {
 		this.noOfCar = noOfCar;
+	}
+	
+	public String getFuel() {
+		return fuel;
+	}
+
+	public void setFuel(String fuel) {
+		this.fuel = fuel;
+	}
+
+	public long getCarCC() {
+		return carCC;
+	}
+
+	public void setCarCC(long carCC) {
+		this.carCC = carCC;
+	}
+
+	public int getMilage() {
+		return milage;
+	}
+
+	public void setMilage(int milage) {
+		this.milage = milage;
 	}
 
 }

@@ -14,7 +14,8 @@ public class ShowroomCarBillRepository extends DBHelper{
 			cs.setInt(2, sCBillModel.getCustId());
 			cs.setInt(3, sCBillModel.getIncurance());
 			cs.setLong(4, sCBillModel.getTotal());
-			return !cs.execute();
+			boolean b=cs.execute();
+			return !b;
 		}
 		catch(Exception ex)
 		{

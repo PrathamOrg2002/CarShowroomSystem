@@ -1,6 +1,6 @@
 package car_showroom_repository.org;
 
-import java.net.Socket;
+
 
 import car_showroom_config.org.DBHelper;
 import car_showroom_model.org.ShowRoomCustomreModel;
@@ -34,7 +34,8 @@ public class ShowroomCustomerRepository extends DBHelper{
 			if(rs.next())
 			{
 				int count=rs.getInt(1);
-				return count%2==0 ? true :false;
+//				if(count%2==0 a)
+				return count%2==0 && count!=0 ? true :false;
 			}
 			else
 			{
