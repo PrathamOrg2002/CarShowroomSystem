@@ -7,7 +7,7 @@ public class CarMasterModel {
 	private int noOfCar;
 	private String fuel;
 	private long carCC;
-	private int milage;
+	private int mileage;
 
 	public CarMasterModel() {
 
@@ -67,12 +67,12 @@ public class CarMasterModel {
 		this.carCC = carCC;
 	}
 
-	public int getMilage() {
-		return milage;
+	public int getMileage() {
+		return mileage;
 	}
 
-	public void setMilage(int milage) {
-		this.milage = milage;
+	public void setMileage(int milage) {
+		this.mileage = milage;
 	}
 
 }

@@ -41,8 +41,27 @@ public class CarMasterService {
 	}
 
 	public ArrayList<CarMasterModel> getCarByPrice(long carPrice) {
-		// TODO Auto-generated method stub
 		return cMRepo.getCarByPrice(carPrice);
+	}
+
+	public boolean updateCarPrice(CarMasterModel cmm) {
+		return cMRepo.updateCarPrice(cmm);
+	}
+
+	public boolean updateCarName(CarMasterModel cmm) {
+		return cMRepo.updateCarName(cmm);
+	}
+
+	public boolean updateCarCC(CarMasterModel cmm) {
+		return cMRepo.updateCarCC(cmm);
+	}
+
+	public boolean updateCarMileage(CarMasterModel cmm) {
+		return cMRepo.updateCarMileage(cmm);
+	}
+
+	public boolean updateCarTOfFual(CarMasterModel cmm) {
+		return cMRepo.updateCarTOfFual(cmm);
 	}
 
 }
