@@ -120,7 +120,7 @@ public class CarShowroomClient {
 							{
 								String header = String.format("%-20s %-10s %-10s %-15s", "Car Name", "Car CC", "Mileage", "Type Of Fuel");
 					            String separator = String.format("%-20s %-10s %-10s %-15s", "--------------------", "----------", "----------", "---------------");
-					            String data = String.format("%-20s %-10s %-10s %-15s", cmModel.getCarName(), cmModel.getCarCC(), cmModel.getMilage(), cmModel.getFuel());
+					            String data = String.format("%-20s %-10s %-10s %-15s", cmModel.getCarName(), cmModel.getCarCC(), cmModel.getMileage(), cmModel.getFuel());
 					            System.out.println(header);
 					            System.out.println(separator);
 					            System.out.println(data);
@@ -300,7 +300,7 @@ public class CarShowroomClient {
 						System.out.println("Invalid Choice 😌😌");
 						break;
 					}
-				} while (choice4 != 5);
+				} while (choice4 != 7);
 				break;
 			case 2: // Employee Login
 				do {
@@ -334,7 +334,8 @@ public class CarShowroomClient {
 									System.out.println("1. Add Car Data");
 									System.out.println("2. Display All Cars");
 									System.out.println("3. Add Insurance Info");
-									System.out.println("4. Exit!!!");
+									System.out.println("4. Update Car Data");
+									System.out.println("5. Exit!!!");
 									System.out.println("==============🚘================🚘==============");
 									System.out.print("Enter the Choice: ");
 									choice3 = sc.nextInt();
@@ -348,7 +349,7 @@ public class CarShowroomClient {
 										System.out.println("Enter the Car CC ");
 										long carCC=sc.nextLong();
 										System.out.println("Enter the car Mileage");
-										int milage=sc.nextInt();
+										int mileage=sc.nextInt();
 										System.out.println("Enter the Car Price");
 										long carPrice = sc.nextInt();
 										System.out.println("Enter the number of Cars ");
@@ -357,7 +358,7 @@ public class CarShowroomClient {
 										CarMasterModel cMModel = new CarMasterModel(carName, carPrice, noOfCar);
 										cMModel.setFuel(fuel);
 										cMModel.setCarCC(carCC);
-										cMModel.setMilage(milage);
+										cMModel.setMileage(mileage);
 										cMModel.setCarId(cMService.getCarIdAuto());
 										if (cMService.addCarData(cMModel)) {
 											System.out.println("Car added succesfull:)");
@@ -388,10 +389,115 @@ public class CarShowroomClient {
 										}
 										break;
 									case 4:
+										do {
+											carId=0;
+											System.out.println("\n♻️➖➖➖➖➖➖➖➖➖➖➖➖➖♻️➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖♻️");
+											System.out.println("\t1. Update Car Price");
+											System.out.println("\t2. Update Car Name ");
+											System.out.println("\t3. Update Car CC");
+											System.out.println("\t4. Update Car mileage");
+											System.out.println("\t5. Update Type of Fual");
+											System.out.println("\t6. Exit from Update menu");
+											System.out.println("♻️➖➖➖➖➖➖➖➖➖➖➖➖➖➖♻️➖➖➖➖➖➖➖➖➖➖➖➖➖➖♻️");
+											System.out.println("Enter the choice ");
+											choice=sc.nextInt();
+											if(choice!=6)
+											{
+												System.out.println("\t Enter the Car ID from Update ");
+												carId=sc.nextInt();
+											}
+											sc.nextLine();
+											switch(choice)
+											{
+											case 1:
+												System.out.println("Enter the Car Price for Update");
+												carPrice=sc.nextLong();
+												sc.nextLine();
+												CarMasterModel cmm= new CarMasterModel();
+												cmm.setCarId(carId);
+												cmm.setCarPrice(carPrice);
+												if(cMService.updateCarPrice(cmm))
+												{
+													System.out.println("Car Price is Update");
+												}
+												else
+												{
+													System.out.println("Car Price is Not Update");
+												}
+												break;
+											case 2:
+												System.out.println("Enter the Car Name for Update");
+												carName=sc.nextLine();
+												cmm= new CarMasterModel();
+												cmm.setCarId(carId);
+												cmm.setCarName(carName);
+												if(cMService.updateCarName(cmm))
+												{
+													System.out.println("Car Name is Update");
+												}
+												else
+												{
+													System.out.println("Car Name is Not Update");
+												}
+												break;
+											case 3:
+												System.out.println("Enter the Car CC for Update");
+												carCC=sc.nextLong();
+												sc.nextLine();
+												cmm= new CarMasterModel();
+												cmm.setCarId(carId);
+												cmm.setCarCC(carCC);
+												if(cMService.updateCarCC(cmm))
+												{
+													System.out.println("Car CC is Update");
+												}
+												else
+												{
+													System.out.println("Car CC is Not Update");
+												}
+												break;
+											case 4:  // Update Car mileage
+												System.out.println("Enter the Car mileage for Update");
+												mileage=sc.nextInt();
+												sc.nextLine();
+												cmm= new CarMasterModel();
+												cmm.setCarId(carId);
+												cmm.setMileage(mileage);
+												if(cMService.updateCarMileage(cmm))
+												{
+													System.out.println("Car mileage is Update");
+												}
+												else
+												{
+													System.out.println("Car mileage is Not Update");
+												}
+												break;
+											case 5:  //	Type of Fual
+												System.out.println("Enter the Car Type of Fual for Update");
+												fuel=sc.nextLine();
+												cmm= new CarMasterModel();
+												cmm.setCarId(carId);
+												cmm.setFuel(fuel);
+												if(cMService.updateCarTOfFual(cmm))
+												{
+													System.out.println("Car Type of Fual is Update");
+												}
+												else
+												{
+													System.out.println("Car Type of Fual is Not Update");
+												}
+												break;
+											case 6:
+												System.out.println("♻️ Exit From Update Menu ♻️");
+												break;
+											}
+										}while(choice!=6);
+										break;
+									case 5:
 										System.out.println("Exit From Showroom ");
 										break;
 									}
-								} while (choice3 != 4);
+								} while (choice3 != 5);
 								// end Showroom
 							} else {
 								System.out.println("Not permitted to enter");
