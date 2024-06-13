@@ -11,4 +11,8 @@ public class RunTimeCustomException extends ArithmeticException{
 	{
 		return ex;
 	}
+	public String getMessage()
+	{
+		return ex;
+	}
 }

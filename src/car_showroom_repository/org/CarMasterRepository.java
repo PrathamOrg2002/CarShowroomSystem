@@ -16,7 +16,7 @@ public class CarMasterRepository extends DBHelper{
 			cs.setLong(3, cMModel.getCarPrice());
 			cs.setInt(4, cMModel.getNoOfCar());
 			cs.setLong(5, cMModel.getCarCC());
-			cs.setInt(6, cMModel.getMilage());
+			cs.setInt(6, cMModel.getMileage());
 			cs.setString(7, cMModel.getFuel());
 			boolean b=cs.execute();
 			return !b;
@@ -191,7 +191,7 @@ public class CarMasterRepository extends DBHelper{
 				CarMasterModel cmm= new CarMasterModel();
 				cmm.setCarName(rs.getString(1));
 				cmm.setCarCC(rs.getLong(2));
-				cmm.setMilage(rs.getInt(3));
+				cmm.setMileage(rs.getInt(3));
 				cmm.setFuel(rs.getString(4));
 				return cmm;
 			}
@@ -231,5 +231,80 @@ public class CarMasterRepository extends DBHelper{
 			return null;
 		}
 		
+	}
+
+	public boolean updateCarPrice(CarMasterModel cmm) {
+		try
+		{
+			pstmt=conn.prepareStatement(p.getProperty("UpdateCarPrice"));
+			pstmt.setLong(1, cmm.getCarPrice());
+			pstmt.setInt(2, cmm.getCarId());
+			return pstmt.executeUpdate() >0 ? true : false;
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+			return false;
+		}
+	}
+
+	public boolean updateCarName(CarMasterModel cmm) {
+		try
+		{
+			pstmt=conn.prepareStatement(p.getProperty("UpdateCarName"));
+			pstmt.setString(1, cmm.getCarName());
+			pstmt.setInt(2, cmm.getCarId());
+			return pstmt.executeUpdate() >0 ? true : false;
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+			return false;
+		}
+	}
+
+	public boolean updateCarCC(CarMasterModel cmm) {
+		try
+		{
+			pstmt=conn.prepareStatement(p.getProperty("UpdateCarCC"));
+			pstmt.setLong(1, cmm.getCarCC());
+			pstmt.setInt(2, cmm.getCarId());
+			return pstmt.executeUpdate() >0 ? true : false;
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+			return false;
+		}
+	}
+
+	public boolean updateCarMileage(CarMasterModel cmm) {
+		try
+		{
+			pstmt=conn.prepareStatement(p.getProperty("UpdateCarMileage"));
+			pstmt.setLong(1, cmm.getMileage());
+			pstmt.setInt(2, cmm.getCarId());
+			return pstmt.executeUpdate() >0 ? true : false;
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+			return false;
+		}
+	}
+
+	public boolean updateCarTOfFual(CarMasterModel cmm) {
+		try
+		{
+			pstmt=conn.prepareStatement(p.getProperty("UpdateCarTypeOfFual"));
+			pstmt.setString(1, cmm.getFuel());
+			pstmt.setInt(2, cmm.getCarId());
+			return pstmt.executeUpdate() >0 ? true : false;
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+			return false;
+		}
 	}
 }
