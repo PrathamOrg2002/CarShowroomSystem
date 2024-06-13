@@ -20,4 +20,7 @@ public class CheckEmployeeException {
 				throw new RunTimeCustomException("🤐🤐 Employee Pass Word is Invalid 🙏 Please Enter the Valid Pass Word (length between 6 to 10 ) 🤐🤐");
 			}
 	}
+	public static void checkEmpPass() {
+		throw new RunTimeCustomException("🤐🤐 Employee Name is Invalid 🙏 Please Enter the Valid Name OR Sign Up 🤐🤐");
+	}
 }
