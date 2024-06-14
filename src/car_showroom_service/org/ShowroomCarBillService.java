@@ -45,22 +45,22 @@ import java.util.*
 		long len=al.size();
 		long xsum=0;
 		long ysum=0;
-		System.out.println(al.size());
+//		System.out.println(al.size());
 		int count=1;
 		for(int i=0;i<al.size();i++)
 		{
 				xsum+=count;
 				count++;
-				System.out.println("x :- "+xsum);
+//				System.out.println("x :- "+xsum);
 				ysum+=al.get(i);
-				System.out.println(ysum);
+//				System.out.println(ysum);
 		}
-		System.out.println("x :- "+xsum);
-		System.out.println("y :- "+ysum);
+//		System.out.println("x :- "+xsum);
+//		System.out.println("y :- "+ysum);
 		long xmean=xsum/len;
 		long ymean=ysum/len;
-		System.out.println("x mean :- "+xmean);
-		System.out.println("y mean :- "+ymean);
+//		System.out.println("x mean :- "+xmean);
+//		System.out.println("y mean :- "+ymean);
 		long prodsum=0;
 		long devxsquare=0;
 		long devx=0,devy=0;
@@ -71,18 +71,18 @@ import java.util.*
 			devy = al.get(i)-ymean;
 			prodsum+= (devx*devy);
 		}
-		System.out.println("x devication :- "+devx);
-		System.out.println("y devication :- "+devy);
-		System.out.println("Sum of product:- "+prodsum);
-		System.out.println("sum of Squer of x:- "+devxsquare);
+//		System.out.println("x devication :- "+devx);
+//		System.out.println("y devication :- "+devy);
+//		System.out.println("Sum of product:- "+prodsum);
+//		System.out.println("sum of Squer of x:- "+devxsquare);
 		long m = prodsum/devxsquare; // value of slope 
 		long b = ymean-(m*xmean);
 		
-		System.out.println("m :- "+m);
-		System.out.println("b:- "+b);
+//		System.out.println("m :- "+m);
+//		System.out.println("b:- "+b);
 		long prediction = (m*(al.size()+1))+b;
-		System.out.println("The predicted sale for next month is "+(prediction));
-		return 1;
+//		System.out.println("The predicted sale for next month is "+(ysum-prediction));
+		return ysum-prediction;
 	}
 
 	public void getcurdate() {

@@ -78,8 +78,8 @@ public class ShowroomCarBillRepository extends DBHelper{
 				varDate=String.join("-",arr3);
 				pstmt.setString(1, fromDate);
 				pstmt.setString(2, varDate);
-				System.out.println("f "+fromDate);
-				System.out.println("vardate "+varDate);
+//				System.out.println("f "+fromDate);
+//				System.out.println("vardate "+varDate);
 				pstmt.setInt(3, n);
 				rs=pstmt.executeQuery();
 				if(rs.next())

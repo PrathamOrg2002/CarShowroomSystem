@@ -510,7 +510,7 @@ public class CarShowroomClient {
 										System.out.println("Enter the date from which you want to consider the sales: (yyyy-mm-dd)");
 										String startDate=sc.nextLine();
 										long predictedSale= sCBillService.getSalePrediction(startDate);
-										
+										System.out.println("The predicted sale for next month is "+predictedSale);
 										
 										break;
 									case 7:
