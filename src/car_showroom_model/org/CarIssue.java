@@ -10,6 +10,9 @@ public class CarIssue {
 	public int getPrice() {
 		return price;
 	}
+	public void setPrice(int price) {
+		this.price=price;
+	}
 
 	public CarIssue(String issuename, int price, int quantity) {
 		this.issuename = issuename;

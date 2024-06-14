@@ -41,4 +41,9 @@ public class ServicingCustomerService {
 		return scr.isUpdateCustomerById(id);
 	}
 
+	public boolean deletecustomerById(int id) {
+
+		return scr.deletecustomerById(id);
+	}
+
 }

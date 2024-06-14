@@ -9,6 +9,8 @@ public class DBHelper {
 	protected Statement stmt = DBConfig.getStmt();
 	protected PreparedStatement pstmt = DBConfig.getPstmt();
 	protected ResultSet rs = DBConfig.getRs();
-	protected Properties p = DBConfig.getp();
+	protected Properties properties = DBConfig.getp();
 	protected CallableStatement cs=DBConfig.getCallStatement();
+	protected PasswordEncr passwordencr=new PasswordEncr();
+	protected AESEncry AESEncr=new AESEncry();
 }

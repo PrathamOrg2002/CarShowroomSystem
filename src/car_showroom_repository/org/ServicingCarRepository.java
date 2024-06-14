@@ -10,8 +10,7 @@ public class ServicingCarRepository extends DBHelper {
 		
 		try
 		{
-			String selectIdByCarNumber=p.getProperty("selectIdByCarNumber");
-			pstmt=conn.prepareStatement(selectIdByCarNumber);
+			pstmt=conn.prepareStatement(properties.getProperty("selectIdByCarNumber"));
 			pstmt.setString(1,number);
 			rs=pstmt.executeQuery();
 			if(rs.next())
@@ -31,8 +30,7 @@ public class ServicingCarRepository extends DBHelper {
 	public boolean getCarById(int id) {
 		try
 		{
-			String selectAllServicingCarModel =p.getProperty("selectAllServicingCarModel");
-			pstmt=conn.prepareStatement(selectAllServicingCarModel);
+			pstmt=conn.prepareStatement(properties.getProperty("selectAllServicingCarModel"));
 			pstmt.setInt(1, id);
 			rs=pstmt.executeQuery();
 			if(rs.next())
@@ -56,8 +54,7 @@ public class ServicingCarRepository extends DBHelper {
 	public boolean changeCarStatusYesById(int carid) {
 		try
 		{
-			String updateServicingCarModel=p.getProperty("updateServicingCarModel");
-			pstmt=conn.prepareStatement(updateServicingCarModel);
+			pstmt=conn.prepareStatement(properties.getProperty("updateServicingCarModel"));
 			pstmt.setInt(1, carid);
 			int value=pstmt.executeUpdate();
 			if(value>0)
@@ -81,8 +78,7 @@ public class ServicingCarRepository extends DBHelper {
 	public boolean changeCarStatusNoById(int carid) {
 		try
 		{
-			String updateservicingcarmodelId=p.getProperty("updateservicingcarmodelId");
-			pstmt=conn.prepareStatement(updateservicingcarmodelId);
+			pstmt=conn.prepareStatement(properties.getProperty("updateservicingcarmodelId"));
 			pstmt.setInt(1, carid);
 			int value=pstmt.executeUpdate();
 			if(value>0)
@@ -106,12 +102,11 @@ public class ServicingCarRepository extends DBHelper {
 	public boolean getCarByCustId(int id) {
 		try
 		{
-			String getCarByCustId=p.getProperty("getCarByCustId");
-			pstmt=conn.prepareStatement(getCarByCustId);
+			pstmt=conn.prepareStatement(properties.getProperty("getCarByCustId"));
 			pstmt.setInt(1, id);
 			rs=pstmt.executeQuery();
 			if(rs.next())
-			{
+			{	
 				System.out.println(rs.getInt(1)+"\t"+rs.getString(2)+"\t"+rs.getString(3)+"\t"+rs.getInt(4));
 				return true;
 			}
@@ -127,15 +122,37 @@ public class ServicingCarRepository extends DBHelper {
 			return false;
 		}
 	}
+	public int getCarIdByCustId(int id) {
+		try
+		{
+			pstmt=conn.prepareStatement(properties.getProperty("getCarByCustId"));
+			pstmt.setInt(1, id);
+			rs=pstmt.executeQuery();
+			if(rs.next())
+			{	
+				return rs.getInt(1);
+			}
+			else
+			{
+				System.out.println("No cars in database");
+				return -1;
+			}
+		}
+		catch(Exception e)
+		{
+			System.out.println("Error is "+e);
+			return -1;
+		}
+	}
+
 
 	public boolean isUpdateCarById(int carid) {
 		Scanner sc2=new Scanner(System.in);
 		System.out.println("Enter updated carnumber,carmodelname of car");
 		String carnumber=sc2.nextLine();
 		String carmodelname=sc2.nextLine();
-		String UpdateCarById = p.getProperty("UpdateCarById");
 		try {
-			pstmt=conn.prepareStatement(UpdateCarById);
+			pstmt=conn.prepareStatement(properties.getProperty("UpdateCarById"));
 			pstmt.setString(1, carnumber);
 			pstmt.setString(2, carmodelname);
 			pstmt.setInt(3,carid);
@@ -160,8 +177,7 @@ public class ServicingCarRepository extends DBHelper {
 		Scanner sc2=new Scanner(System.in);
 		try
 		{
-			String getCarByCustId=p.getProperty("getCarByCustId");
-			pstmt=conn.prepareStatement(getCarByCustId);
+			pstmt=conn.prepareStatement(properties.getProperty("getCarByCustId"));
 			pstmt.setInt(1, id);
 			rs=pstmt.executeQuery();
 			if(rs.next())
@@ -180,6 +196,31 @@ public class ServicingCarRepository extends DBHelper {
 			return false;
 		}
 		
+		return false;
+	}
+
+	public boolean deleteCarById(int id) {
+		try
+		{
+			pstmt=conn.prepareStatement(properties.getProperty("deleteCarById"));
+			pstmt.setInt(1, id);
+			int value=pstmt.executeUpdate();
+			if(value>0)
+			{
+				System.out.println("Data deleted succesfully...");
+				return true;
+			}
+			else
+			{
+				System.out.println("Data not deleted...");
+				return false;
+			}
+			
+		}
+		catch(Exception e)
+		{
+			System.out.println("Error is "+e);
+		}
 		return false;
 	}
 

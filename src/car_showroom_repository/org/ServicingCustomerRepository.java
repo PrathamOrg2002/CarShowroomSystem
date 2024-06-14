@@ -14,25 +14,22 @@ public class ServicingCustomerRepository extends DBHelper {
 	public boolean isAddServicigCutomer(ServicingCustomerModel customermodel) {
 		
 		try {
-			String insertIdNumNamInServicingCarModel=p.getProperty("insertIdNumNamInServicingCarModel");
-			pstmt=conn.prepareStatement(insertIdNumNamInServicingCarModel);
+			pstmt=conn.prepareStatement(properties.getProperty("insertIdNumNamInServicingCarModel"));
 			pstmt.setString(1, customermodel.getModel().getCarnumber());
 			pstmt.setString(2, customermodel.getModel().getCarmodelname());
 			int value=pstmt.executeUpdate();
 			
 			if(value>0){
 				System.out.println("car of customer added sucessfully");
-				String insertIdNamConInSerCustModel=p.getProperty("insertIdNamConInSerCustModel");
-				pstmt=conn.prepareStatement(insertIdNamConInSerCustModel);
+				pstmt=conn.prepareStatement(properties.getProperty("insertIdNamConInSerCustModel"));
 				pstmt.setString(1, customermodel.getName());
 				pstmt.setString(2, customermodel.getContact());
 				value=pstmt.executeUpdate();
 				if(value>0)
 				{
 					System.out.println("customer added sucessfully");
-					String insertCarCusomerJoin=p.getProperty("insertCarCusomerJoin");
 					int cid=getCustomerIdByName(customermodel.getName());
-					pstmt=conn.prepareStatement(insertCarCusomerJoin);
+					pstmt=conn.prepareStatement(properties.getProperty("insertCarCusomerJoin"));
 					ServicingCarService scs=new ServicingCarService();
 					int carid=scs.getCarIdByNumber(customermodel.getModel().getCarnumber());
 					pstmt.setInt(1, carid);
@@ -50,8 +47,7 @@ public class ServicingCustomerRepository extends DBHelper {
 					for(CarIssue ci:al)
 					{
 						int cid1=ci.getIssueid();
-						String insertInCarIssueJoin=p.getProperty("insertInCarIssueJoin");
-						pstmt=conn.prepareStatement(insertInCarIssueJoin);
+						pstmt=conn.prepareStatement(properties.getProperty("insertInCarIssueJoin"));
 						pstmt.setInt(1,carid);
 						pstmt.setInt(2,cid1);
 						value=pstmt.executeUpdate();
@@ -84,8 +80,7 @@ public class ServicingCustomerRepository extends DBHelper {
 	public int getCustomerIdByName(String name) {
 		try
 		{
-			String selectIdByCustName=p.getProperty("selectIdByCustName");
-			pstmt=conn.prepareStatement(selectIdByCustName);
+			pstmt=conn.prepareStatement(properties.getProperty("selectIdByCustName"));
 			pstmt.setString(1,name);
 			rs=pstmt.executeQuery();
 			if(rs.next())
@@ -104,15 +99,23 @@ public class ServicingCustomerRepository extends DBHelper {
 	public boolean isShowAllServicigCutomer() {
 		try
 		{
-			String selectAllCustAndCar=p.getProperty("selectAllCustAndCar");
-			pstmt=conn.prepareStatement(selectAllCustAndCar);
+			pstmt=conn.prepareStatement(properties.getProperty("selectAllCustAndCar"));
 			rs=pstmt.executeQuery();
-			System.out.println("Id\tName\tContact\t\trecurr\tCarid\tCarno\tCarName\tCarstatus");
-			while(rs.next())
+			if(rs.isBeforeFirst())
 			{
-				System.out.println(rs.getInt(1)+"\t"+rs.getString(2)+"\t"+rs.getString(3)+"\t"+rs.getInt(4)+"\t"+rs.getInt(7)+"\t"+rs.getString(8)+"\t"+rs.getString(9)+"\t"+rs.getInt(10));
+				System.out.println("Id\tName\tContact\t\trecurr\tCarid\tCarno\tCarName\tCarstatus");
+				while(rs.next())
+				{
+					System.out.println(rs.getInt(1)+"\t"+rs.getString(2)+"\t"+rs.getString(3)+"\t"+rs.getInt(4)+"\t"+rs.getInt(7)+"\t"+rs.getString(8)+"\t"+rs.getString(9)+"\t"+rs.getInt(10));
+				}
+				return true;
 			}
-			return true;
+			else
+			{
+				System.out.println("No customer found ");
+				return false;
+			}
+			
 		}
 		catch(Exception e)
 		{
@@ -124,16 +127,24 @@ public class ServicingCustomerRepository extends DBHelper {
 	public boolean getCustomerByName(String name) {
 		try
 		{
-			String selectCustByName=p.getProperty("selectCustByName");
-			pstmt=conn.prepareStatement(selectCustByName);
+			pstmt=conn.prepareStatement(properties.getProperty("selectCustByName"));
 			pstmt.setString(1,name);
 			rs=pstmt.executeQuery();
-			System.out.println("Id\tName\tContact\t\trecurr");
-			while(rs.next())
+			if(rs.isBeforeFirst())
 			{
-				System.out.println(rs.getInt(1)+"\t"+rs.getString(2)+"\t"+rs.getString(3)+"\t"+rs.getInt(4));
+				System.out.println("Id\tName\tContact\t\trecurr");
+				while(rs.next())
+				{
+					System.out.println(rs.getInt(1)+"\t"+rs.getString(2)+"\t"+rs.getString(3)+"\t"+rs.getInt(4));
+				}
+				return true;
 			}
-			return true;
+			else
+			{
+				System.out.println("Error fetching customer");
+				return false;
+			}
+			
 		}
 		catch(Exception e)
 		{
@@ -146,16 +157,24 @@ public class ServicingCustomerRepository extends DBHelper {
 	public boolean getCustomerById(int id) {
 		try
 		{
-			String selectCustById=p.getProperty("selectCustById");
-			pstmt=conn.prepareStatement(selectCustById);
+			pstmt=conn.prepareStatement(properties.getProperty("selectCustById"));
 			pstmt.setInt(1,id);
 			rs=pstmt.executeQuery();
-			System.out.println("Id\tName\tContact\t\trecurr");
-			while(rs.next())
+			if(rs.isBeforeFirst())
 			{
-				System.out.println(rs.getInt(1)+"\t"+rs.getString(2)+"\t"+rs.getString(3)+"\t"+rs.getInt(4));
+				System.out.println("Id\tName\tContact\t\trecurr");
+				while(rs.next())
+				{
+					System.out.println(rs.getInt(1)+"\t"+rs.getString(2)+"\t"+rs.getString(3)+"\t"+rs.getInt(4));
+				}
+				return true;
 			}
-			return true;
+			else
+			{
+				System.out.println("Customer not found ");
+				return false;
+			}
+			
 		}
 		catch(Exception e)
 		{
@@ -174,9 +193,8 @@ public class ServicingCustomerRepository extends DBHelper {
 		System.out.println("Enter update name contact of customer");
 		String namex=sc2.nextLine();
 		String contactx=sc2.nextLine();
-		String updateCustomerByName = p.getProperty("updateCustomerByName");
 		try {
-			pstmt=conn.prepareStatement(updateCustomerByName);
+			pstmt=conn.prepareStatement(properties.getProperty("updateCustomerByName"));
 			pstmt.setString(1, namex);
 			pstmt.setString(2, contactx);
 			pstmt.setString(3, name);
@@ -203,9 +221,8 @@ public class ServicingCustomerRepository extends DBHelper {
 		System.out.println("Enter updated name, contact of customer");
 		String namex=sc2.nextLine();
 		String contactx=sc2.nextLine();
-		String updateCustomerById = p.getProperty("updateCustomerById");
 		try {
-			pstmt=conn.prepareStatement(updateCustomerById);
+			pstmt=conn.prepareStatement(properties.getProperty("updateCustomerById"));
 			pstmt.setString(1, namex);
 			pstmt.setString(2, contactx);
 			pstmt.setInt(3, id);
@@ -225,5 +242,30 @@ public class ServicingCustomerRepository extends DBHelper {
 			return false;
 		}
 		
+	}
+
+	public boolean deletecustomerById(int id) {
+		try
+		{
+			pstmt=conn.prepareStatement(properties.getProperty("deletecustomerById"));
+			pstmt.setInt(1, id);
+			int value=pstmt.executeUpdate();
+			if(value>0)
+			{
+				System.out.println("Data deleted succesfully...");
+				return true;
+			}
+			else
+			{
+				System.out.println("Data not deleted...");
+				return false;
+			}
+			
+		}
+		catch(Exception e)
+		{
+			System.out.println("Error is "+e);
+		}
+		return false;
 	}
 }

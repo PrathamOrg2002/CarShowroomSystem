@@ -3,6 +3,8 @@ package car_showroom_config.org;
 import java.io.*;
 import java.sql.*;
 import java.util.Properties;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class DBConfig {
 	private static Connection conn;
@@ -12,6 +14,7 @@ public class DBConfig {
 	private static DBConfig db = null;
 	private static CallableStatement cs;
 	private static Properties p = new Properties();
+	
 	// constructer
 	private DBConfig() {
 		try {
@@ -21,7 +24,7 @@ public class DBConfig {
 			String pass = p.getProperty("db.password");
 			String url = p.getProperty("db.url");
 			Class.forName(className);
-			conn = DriverManager.getConnection(url, uName, pass);
+			conn = DriverManager.getConnection(url, AESEncry.decrypt(uName), AESEncry.decrypt(pass));
 			if (conn != null) {
 				System.out.println("Database Connected");
 			} else {
@@ -74,4 +77,5 @@ public class DBConfig {
 	{
 		return cs;
 	}
+	
 }

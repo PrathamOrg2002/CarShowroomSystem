@@ -38,4 +38,11 @@ public class ServicingCarService {
 		
 		return scr.isUpdateCarByCusId(id);
 	}
+
+	public boolean deleteCarById(int id) {
+		return scr.deleteCarById(id);
+	}
+	public int getCarIdByCustId(int id) {
+		return scr.getCarIdByCustId(id);
+	}
 }

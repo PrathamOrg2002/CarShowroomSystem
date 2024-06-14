@@ -9,8 +9,7 @@ public class CarMasterRepository extends DBHelper{
 
 	public boolean addCarData(CarMasterModel cMModel) {
 		try {
-			String insertInCarmaster=p.getProperty("insertInCarmaster");
-			pstmt=conn.prepareStatement(insertInCarmaster);
+			pstmt=conn.prepareStatement(properties.getProperty("insertInCarmaster"));
 			pstmt.setString(1, cMModel.getCarName());
 			pstmt.setLong(2, cMModel.getCarPrice());
 			pstmt.setInt(3, cMModel.getNoOfCar());
@@ -28,8 +27,7 @@ public class CarMasterRepository extends DBHelper{
 		ArrayList<CarMasterModel> al= new ArrayList<CarMasterModel>();
 		try
 		{
-			String selectAllcarmaster=p.getProperty("selectAllcarmaster");
-			pstmt=conn.prepareStatement(selectAllcarmaster);
+			pstmt=conn.prepareStatement(properties.getProperty("selectAllcarmaster"));
 			rs=pstmt.executeQuery();
 			while(rs.next())
 			{
@@ -53,8 +51,7 @@ public class CarMasterRepository extends DBHelper{
 	public long getShowCarPriceById(int carId) {
 		try
 		{
-			String selctCarPriceFromCarId=p.getProperty("selctCarPriceFromCarId");
-			pstmt=conn.prepareStatement(selctCarPriceFromCarId);
+			pstmt=conn.prepareStatement(properties.getProperty("selctCarPriceFromCarId"));
 			pstmt.setInt(1, carId);
 			rs=pstmt.executeQuery();
 			if(rs.next())
@@ -79,8 +76,7 @@ public class CarMasterRepository extends DBHelper{
 	public String getShowCarNameById(int carId) {
 		try
 		{
-			String selectCarNameByCarId=p.getProperty("selectCarNameByCarId");
-			pstmt=conn.prepareStatement(selectCarNameByCarId);
+			pstmt=conn.prepareStatement(properties.getProperty("selectCarNameByCarId"));
 			pstmt.setInt(1, carId);
 			rs=pstmt.executeQuery();
 			if(rs.next())
@@ -104,8 +100,7 @@ public class CarMasterRepository extends DBHelper{
 	public long getShowCarPriceByName(String carName) {
 		try
 		{
-			String selectCarPriceByCarName=p.getProperty("selectCarPriceByCarName");
-			pstmt=conn.prepareStatement(selectCarPriceByCarName);
+			pstmt=conn.prepareStatement(properties.getProperty("selectCarPriceByCarName"));
 			pstmt.setString(1, carName);
 			rs=pstmt.executeQuery();
 			if(rs.next())
@@ -129,9 +124,7 @@ public class CarMasterRepository extends DBHelper{
 	public int getCarIdbyName(String carName) {
 		try
 		{
-			String selectCarIdFromCarName=p.getProperty("selectCarIdFromCarName");
-			pstmt=conn.prepareStatement(selectCarIdFromCarName);
-
+			pstmt=conn.prepareStatement(properties.getProperty("selectCarIdFromCarName"));
 			pstmt.setString(1, carName);
 			rs=pstmt.executeQuery();
 			if(rs.next())
