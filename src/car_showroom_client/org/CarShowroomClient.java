@@ -1,5 +1,6 @@
 package car_showroom_client.org;
 
+import java.io.Console;
 import java.util.*;
 import car_showroom_custom_exception.org.CheckCustomerException;
 import car_showroom_custom_exception.org.CheckEmployeeException;
@@ -37,11 +38,11 @@ public class CarShowroomClient {
 		ShowroomInsuranceService shInsService = new ShowroomInsuranceService();
 		ShowroomCarBillService sCBillService = new ShowroomCarBillService();
 		ServicingCarBillService sbillService = new ServicingCarBillService();
- 
 		int choice = 0;
 		int choice2 = 0;
 		int choice4 = 0;
 		int choice3=0;
+    	int carId;
 		do {
 			System.out.println("\n----------------------------------");
 			System.out.println("1.🚘 Enter in Car Showroom 🚘");
@@ -76,16 +77,18 @@ public class CarShowroomClient {
 					catch(RunTimeCustomException rx)
 					{
 						System.out.println(rx.getMsg());
-						rx.getStackTrace();
+						rx.printStackTrace();
 					}	
 				}
 				do {
 					System.out.println("\n==============🚘================🚘==============");
 					System.out.println("1. Display All Cars");
-					System.out.println("2. Checkout Discount Here...");
-					System.out.println("3. Get Approximate Estimate Of your favourite Car");
-					System.out.println("4. Get Bill Of Car");
-					System.out.println("5. Exit from Car Showroom 🙏🏻");
+					System.out.println("2. Check Feature of Car");
+					System.out.println("3. Enter the Car Price See the Car Under price");
+					System.out.println("4. Checkout Discount Here...");
+					System.out.println("5. Get Approximate Estimate Of your favourite Car");
+					System.out.println("6. Get Bill Of Car");
+					System.out.println("7. Exit from Car Showroom 🙏🏻");
 					System.out.println("==============🚘================🚘==============");
 					System.out.print("Enter your choice: ");
 					choice4 = sc.nextInt();
@@ -96,17 +99,62 @@ public class CarShowroomClient {
 						if (al != null) {
 		
 							System.out.println("All Cars Information");
-							System.out.println("Car ID \t Name \t Price ");
+							String header = String.format("%-10s %-20s %-10s", "Car ID", "Car Name", "Price");
+				            String separator = String.format("%-10s %-20s %-10s", "----------", "--------------------", "----------");
+				            System.out.println(header);
+				            System.out.println(separator);
+				            
 							for (CarMasterModel cMModel1 : al) {
-								System.out.println(cMModel1.getCarId() + "\t" + cMModel1.getCarName() + "\t"
-										+ cMModel1.getCarPrice());
+								String data = String.format("%-10s %-20s %-10s", cMModel1.getCarId(), cMModel1.getCarName(), cMModel1.getCarPrice());
+								System.out.println(data);
 							}
-							System.out.println();
 						} else {
 							System.out.println("No Cars in Database");
 						}
 						break;
-					case 2:  		//Checkout Discount Here...
+						
+					case 2:  //Check Feature of Car
+							System.out.println("Enter the Car ID for Check Features of car");
+							carId= sc.nextInt();
+							sc.nextLine();
+							CarMasterModel cmModel=cMService.getCarFeature(carId);
+							if(cmModel!=null)
+							{
+								String header = String.format("%-20s %-10s %-10s %-15s", "Car Name", "Car CC", "Mileage", "Type Of Fuel");
+					            String separator = String.format("%-20s %-10s %-10s %-15s", "--------------------", "----------", "----------", "---------------");
+					            String data = String.format("%-20s %-10s %-10s %-15s", cmModel.getCarName(), cmModel.getCarCC(), cmModel.getMileage(), cmModel.getFuel());
+					            System.out.println(header);
+					            System.out.println(separator);
+					            System.out.println(data);
+							}
+							else
+							{
+								System.out.println("😌😌 Car Is Not Available 😌😌");
+							}
+						break;
+						
+					case 3:    // Enter the Car Price See the Car Under price
+						System.out.println("Enter the Car Price ");
+						long carPrice=sc.nextLong();
+						ArrayList<CarMasterModel>alPrice=cMService.getCarByPrice(carPrice);
+						if(alPrice!=null)
+						{
+							Iterator<CarMasterModel> it= alPrice.iterator();
+							System.out.println(String.format("%-20s %-10s", "Car Name", "Car Price"));
+							System.out.println(String.format("%-20s %-10s", "--------------------", "----------") );
+							while(it.hasNext())
+							{
+								CarMasterModel cmm=it.next();
+								
+								System.out.println(String.format("%-20s %-10s", cmm.getCarName(), cmm.getCarPrice()) );
+							}
+						}
+						else {
+							System.out.println("😌😌 Car Is Not Available 😌😌");
+						}
+						break;
+						
+					case 4:  		//Checkout Discount Here...
 						try
 						{
 							System.out.println("Enter the Customer Name For Discount ");
@@ -136,12 +184,12 @@ public class CarShowroomClient {
 						catch(RunTimeCustomException rx)
 						{
 							System.out.println(rx.getMsg());
-							rx.getStackTrace();
+							rx.printStackTrace();
 						}
 						
 						
 						break;
-					case 3: // Gate Estimate of Car
+					case 5: // Gate Estimate of Car
 						System.out.println("  Car Estimate  ");
 						System.out.println("Enter the Car Id ");
 						int CarId = sc.nextInt();
@@ -179,7 +227,7 @@ public class CarShowroomClient {
 						}
 
 						break;
-					case 4:// Gate Bill Of Car
+					case 6:// Gate Bill Of Car
 						try
 						{
 							System.out.println("Enter the Customer Name");
@@ -197,7 +245,7 @@ public class CarShowroomClient {
 								String carName = sc.nextLine();
 								carPrice = cMService.getShowCarPriceByName(carName);
 								if (carPrice != -1) {
-									int carId = cMService.getCarIdbyName(carName);
+									carId = cMService.getCarIdbyName(carName);
 									ArrayList<ShowroomInsuranceModel> al1 = shInsService.getInsuranceList();
 
 									if (al1 != null) {
@@ -244,18 +292,18 @@ public class CarShowroomClient {
 						catch(RunTimeCustomException rx)
 						{
 							System.out.println(rx.getMsg());
-							rx.getStackTrace();
+							rx.printStackTrace() ;
 						}
 						
 						break;
-					case 5:
+					case 7:
 						System.out.println("😌😌 Exit from Car Showroom 😌😌");
 						break;
 					default:
 						System.out.println("Invalid Choice 😌😌");
 						break;
 					}
-				} while (choice4 != 5);
+				} while (choice4 != 7);
 				break;
 			case 2: // Employee Login
 				do {
@@ -289,7 +337,8 @@ public class CarShowroomClient {
 									System.out.println("1. Add Car Data");
 									System.out.println("2. Display All Cars");
 									System.out.println("3. Add Insurance Info");
-									System.out.println("4. Exit!!!");
+									System.out.println("4. Update Car Data");
+									System.out.println("5. Exit!!!");
 									System.out.println("==============🚘================🚘==============");
 									System.out.print("Enter the Choice: ");
 									choice3 = sc.nextInt();
@@ -298,12 +347,22 @@ public class CarShowroomClient {
 									case 1:
 										System.out.println("Enter the Car Name ");
 										String carName = sc.nextLine();
+										System.out.println("Enter the Type of Fuel");
+										String fuel=sc.next();
+										System.out.println("Enter the Car CC ");
+										long carCC=sc.nextLong();
+										System.out.println("Enter the car Mileage");
+										int mileage=sc.nextInt();
 										System.out.println("Enter the Car Price");
 										long carPrice = sc.nextInt();
 										System.out.println("Enter the number of Cars ");
 										int noOfCar = sc.nextInt();
 										sc.nextLine();
 										CarMasterModel cMModel = new CarMasterModel(carName, carPrice, noOfCar);
+										cMModel.setFuel(fuel);
+										cMModel.setCarCC(carCC);
+										cMModel.setMileage(mileage);
+										cMModel.setCarId(cMService.getCarIdAuto());
 										if (cMService.addCarData(cMModel)) {
 											System.out.println("Car added succesfull:)");
 										} else {
@@ -333,10 +392,115 @@ public class CarShowroomClient {
 										}
 										break;
 									case 4:
+										do {
+											carId=0;
+											System.out.println("\n♻️➖➖➖➖➖➖➖➖➖➖➖➖➖♻️➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖♻️");
+											System.out.println("\t1. Update Car Price");
+											System.out.println("\t2. Update Car Name ");
+											System.out.println("\t3. Update Car CC");
+											System.out.println("\t4. Update Car mileage");
+											System.out.println("\t5. Update Type of Fual");
+											System.out.println("\t6. Exit from Update menu");
+											System.out.println("♻️➖➖➖➖➖➖➖➖➖➖➖➖➖➖♻️➖➖➖➖➖➖➖➖➖➖➖➖➖➖♻️");
+											System.out.println("Enter the choice ");
+											choice=sc.nextInt();
+											if(choice!=6)
+											{
+												System.out.println("\t Enter the Car ID from Update ");
+												carId=sc.nextInt();
+											}
+											sc.nextLine();
+											switch(choice)
+											{
+											case 1:
+												System.out.println("Enter the Car Price for Update");
+												carPrice=sc.nextLong();
+												sc.nextLine();
+												CarMasterModel cmm= new CarMasterModel();
+												cmm.setCarId(carId);
+												cmm.setCarPrice(carPrice);
+												if(cMService.updateCarPrice(cmm))
+												{
+													System.out.println("Car Price is Update");
+												}
+												else
+												{
+													System.out.println("Car Price is Not Update");
+												}
+												break;
+											case 2:
+												System.out.println("Enter the Car Name for Update");
+												carName=sc.nextLine();
+												cmm= new CarMasterModel();
+												cmm.setCarId(carId);
+												cmm.setCarName(carName);
+												if(cMService.updateCarName(cmm))
+												{
+													System.out.println("Car Name is Update");
+												}
+												else
+												{
+													System.out.println("Car Name is Not Update");
+												}
+												break;
+											case 3:
+												System.out.println("Enter the Car CC for Update");
+												carCC=sc.nextLong();
+												sc.nextLine();
+												cmm= new CarMasterModel();
+												cmm.setCarId(carId);
+												cmm.setCarCC(carCC);
+												if(cMService.updateCarCC(cmm))
+												{
+													System.out.println("Car CC is Update");
+												}
+												else
+												{
+													System.out.println("Car CC is Not Update");
+												}
+												break;
+											case 4:  // Update Car mileage
+												System.out.println("Enter the Car mileage for Update");
+												mileage=sc.nextInt();
+												sc.nextLine();
+												cmm= new CarMasterModel();
+												cmm.setCarId(carId);
+												cmm.setMileage(mileage);
+												if(cMService.updateCarMileage(cmm))
+												{
+													System.out.println("Car mileage is Update");
+												}
+												else
+												{
+													System.out.println("Car mileage is Not Update");
+												}
+												break;
+											case 5:  //	Type of Fual
+												System.out.println("Enter the Car Type of Fual for Update");
+												fuel=sc.nextLine();
+												cmm= new CarMasterModel();
+												cmm.setCarId(carId);
+												cmm.setFuel(fuel);
+												if(cMService.updateCarTOfFual(cmm))
+												{
+													System.out.println("Car Type of Fual is Update");
+												}
+												else
+												{
+													System.out.println("Car Type of Fual is Not Update");
+												}
+												break;
+											case 6:
+												System.out.println("♻️ Exit From Update Menu ♻️");
+												break;
+											}
+										}while(choice!=6);
+										break;
+									case 5:
 										System.out.println("Exit From Showroom ");
 										break;
 									}
-								} while (choice3 != 4);
+								} while (choice3 != 5);
 								// end Showroom
 							} else {
 								System.out.println("Not permitted to enter");
@@ -700,61 +864,75 @@ public class CarShowroomClient {
 						}
 						break;
 					case 3: // sign-up
-						System.out.println("\n----------------------------------");
-						System.out.println("1. Showroom sign-up ");
-						System.out.println("2. Servicing center sign-up");
-						System.out.println("----------------------------------");
-						System.out.print("Enter the choice: ");
-						int choice1 = sc.nextInt();
-						sc.nextLine();
-						if (choice1 == 1) {
-							try {
-								System.out.println("Enter the Employee User Name for showroom sign-up ");
-								String uName = sc.nextLine();
-								CheckEmployeeException.checkEmpUname(uName);
-								System.out.println("Enter the Employee PassWord for showroom sign-up ");
-								String passWord = sc.nextLine();
-								CheckEmployeeException.checkEmpPass(passWord);
-								LoginModel eLModel = new LoginModel(uName, passWord);
-//								eLModel.setAccessStatus(b);
-								boolean b = lServices.empSignUpInShowR(eLModel);
-								if (b) {
-									System.out.println("Registration Successfully :|");
-									System.out.println("Wait for Admin Verification");
-								} else {
-									System.out.println("Registration failed !!!");
-								}
-							}
-							catch(RunTimeCustomException rx)
+						
+						do
+						{
+							System.out.println("\n----------------------------------");
+							System.out.println("1. Showroom sign-up ");
+							System.out.println("2. Servicing center sign-up");
+							System.out.println("3. Exit from Sign-up");
+							System.out.println("----------------------------------");
+							System.out.print("Enter the choice: ");
+							choice = sc.nextInt();
+							sc.nextLine();
+							switch(choice)
 							{
-								System.out.println(rx.getMsg());
-								rx.printStackTrace();
-							}
-							
-						}
-						else if (choice1 == 2) {
-							try {
-								System.out.println("Enter the Employee User Name for service sign-up ");
-								String uName = sc.nextLine();
-								CheckEmployeeException.checkEmpUname(uName);
-								System.out.println("Enter the Employee PassWord for service sign-up ");
-								String passWord = sc.nextLine();
-								LoginModel eLModel = new LoginModel(uName, passWord);
-								CheckEmployeeException.checkEmpPass(passWord);
-								boolean b = lServices.empSignUpInService(eLModel);
-								if (b) {
-									System.out.println("Registration Successfully :|");
-									System.out.println("Wait for Admin Verification");
-								} else {
-									System.out.println("Registration fill!!!");
+							case 1: 
+								try {
+									System.out.println("Enter the Employee User Name for showroom sign-up ");
+									String uName = sc.nextLine();
+									CheckEmployeeException.checkEmpUname(uName);
+									System.out.println("Enter the Employee PassWord for showroom sign-up ");
+									String passWord = sc.nextLine();
+									CheckEmployeeException.checkEmpPass(passWord);
+									LoginModel eLModel = new LoginModel(uName, passWord);
+//									eLModel.setAccessStatus(b);
+									boolean b = lServices.empSignUpInShowR(eLModel);
+									if (b) {
+										System.out.println("Registration Successfully :|");
+										System.out.println("Wait for Admin Verification");
+									} else {
+										System.out.println("Registration failed !!!");
+									}
 								}
+								catch(RunTimeCustomException rx)
+								{
+									System.out.println(rx.getMsg());
+									rx.printStackTrace();
+								}
+							break;	
+							case 2: 
+								try {
+									System.out.println("Enter the Employee User Name for service sign-up ");
+									String uName = sc.nextLine();
+									CheckEmployeeException.checkEmpUname(uName);
+									System.out.println("Enter the Employee PassWord for service sign-up ");
+									String passWord = sc.nextLine();
+									LoginModel eLModel = new LoginModel(uName, passWord);
+									CheckEmployeeException.checkEmpPass(passWord);
+									boolean b = lServices.empSignUpInService(eLModel);
+									if (b) {
+										System.out.println("Registration Successfully :|");
+										System.out.println("Wait for Admin Verification");
+									} else {
+										System.out.println("Registration fill!!!");
+									}
+								}
+								catch(RunTimeCustomException rx)
+								{
+									System.out.println(rx.getMsg());
+									rx.printStackTrace();
+								}
+								
+							break;
+							case 3:
+								System.out.println("😌😌 You have Exit from Sign-up 😌😌");
+								break;
+							default:
+									System.out.println("🙏🙏 Please Enter the Valid Choice 🙏🙏");
+								break;	
 							}
-							catch(RunTimeCustomException rx)
-							{
-								System.out.println(rx.getMsg());
-								rx.printStackTrace();
-							}
-						}
+						}while(choice!=3);
 						break;
 					case 4:
 						System.out.println("Exited from Employee Login 🙏🏻");

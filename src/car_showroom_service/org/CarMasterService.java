@@ -32,4 +32,36 @@ public class CarMasterService {
 		return cMRepo.getCarIdbyName(carName);
 	}
 
+	public int getCarIdAuto() {
+		return cMRepo.getCarIdAuto();
+	}
+
+	public CarMasterModel getCarFeature(int carId) {
+		return cMRepo.getCarFeature(carId);
+	}
+
+	public ArrayList<CarMasterModel> getCarByPrice(long carPrice) {
+		return cMRepo.getCarByPrice(carPrice);
+	}
+
+	public boolean updateCarPrice(CarMasterModel cmm) {
+		return cMRepo.updateCarPrice(cmm);
+	}
+
+	public boolean updateCarName(CarMasterModel cmm) {
+		return cMRepo.updateCarName(cmm);
+	}
+
+	public boolean updateCarCC(CarMasterModel cmm) {
+		return cMRepo.updateCarCC(cmm);
+	}
+
+	public boolean updateCarMileage(CarMasterModel cmm) {
+		return cMRepo.updateCarMileage(cmm);
+	}
+
+	public boolean updateCarTOfFual(CarMasterModel cmm) {
+		return cMRepo.updateCarTOfFual(cmm);
+	}
+
 }

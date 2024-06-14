@@ -1,6 +1,10 @@
 package car_showroom_repository.org;
 
+import java.sql.SQLException;
+
 import car_showroom_config.org.DBHelper;
+import car_showroom_custom_exception.org.CheckEmployeeException;
+import car_showroom_custom_exception.org.RunTimeCustomException;
 import car_showroom_model.org.LoginModel;
 
 public class LoginRepository extends DBHelper {
@@ -28,13 +32,14 @@ public class LoginRepository extends DBHelper {
 			}
 			else
 			{
-				System.out.println("Invalid user please sign up first...");
+				CheckEmployeeException.checkEmpPass();	
 				return false;
 			}
 		}
-		catch(Exception e)
+		catch(RunTimeCustomException | SQLException e)
 		{
-			System.out.println("Error is "+e);
+			System.out.println(e.getMessage());
+			e.printStackTrace();
 			return false;
 		}
 		
@@ -61,13 +66,14 @@ public class LoginRepository extends DBHelper {
 			}
 			else
 			{
-				System.out.println("Invalid user please sign up first...");
+				CheckEmployeeException.checkEmpPass();
 				return false;
 			}
 		}
-		catch(Exception e)
+		catch(RunTimeCustomException | SQLException e)
 		{
-			System.out.println("Error is "+e);
+			System.out.println(e.getMessage());
+			e.printStackTrace();
 			return false;
 		}
 		
@@ -87,9 +93,10 @@ public class LoginRepository extends DBHelper {
 			}
 			return false;
 		}
-		catch(Exception ex)
+		catch(RunTimeCustomException | SQLException ex)
 		{
 			System.out.println("Error in Registration Method???!!! "+ ex);
+			ex.printStackTrace();
 			return false;
 		}
 		
@@ -108,9 +115,10 @@ public class LoginRepository extends DBHelper {
 			}
 			return false;
 		}
-		catch(Exception ex)
+		catch(RunTimeCustomException | SQLException ex)
 		{
 			System.out.println("Error in Registration Method???!!! "+ ex);
+			ex.printStackTrace();
 			return false;
 		}
 	}
