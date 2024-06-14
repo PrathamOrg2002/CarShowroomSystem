@@ -1,15 +1,12 @@
 package car_showroom_client.org;
 
-import java.io.Console;
 import java.util.*;
-
 import car_showroom_custom_exception.org.CheckCustomerException;
 import car_showroom_custom_exception.org.CheckEmployeeException;
 import car_showroom_custom_exception.org.RunTimeCustomException;
 import car_showroom_model.org.CarIssue;
 import car_showroom_model.org.CarMasterModel;
 import car_showroom_model.org.LoginModel;
-
 import car_showroom_model.org.ServicingCarModel;
 import car_showroom_model.org.ServicingCustomerModel;
 import car_showroom_service.org.CarIssueService;
@@ -24,7 +21,6 @@ import car_showroom_model.org.ShowroomInsuranceModel;
 import car_showroom_service.org.ShowroomCustomerService;
 import car_showroom_service.org.ShowroomInsuranceService;
 
-import java.util.*;
 
 public class CarShowroomClient {
 	public static void main(String[] args) {
@@ -206,11 +202,12 @@ public class CarShowroomClient {
 									System.out.println("Enter the Insurance Id");
 									int insId = sc.nextInt();
 									ShowroomInsuranceModel shRInsModel = shInsService.getInsurancePrice(insId);
-
-									System.out.println("Car Name " + carName + "\tEx Showroom  Price" + carPrice);
-									System.out.println("Insurance Name " + shRInsModel.getName() + "\tPrice "
-											+ shRInsModel.getPrice());
-									System.out.println("Total Price is " + (carPrice + shRInsModel.getPrice()));
+									
+									System.out.println(String.format("%-20s %-2s %-10s", "Car Name","🟰",carName));
+									System.out.println(String.format("%-20s %-2s %-10s", "Ex Showroom  Price" ,"🟰", carPrice) );
+									System.out.println(String.format("%-20s %-2s %-10s", "Insurance Name " ,"🟰", shRInsModel.getName()));
+									System.out.println(String.format("%-20s %-2s %-10s", "Price " ,"🟰", shRInsModel.getPrice()) );
+									System.out.println(String.format("%-20s %-2s %-10s", "Total Price is " ,"🟰", (carPrice + shRInsModel.getPrice())) );
 								} else {
 									System.out.println("Insurance List is not present ????");
 								}
@@ -335,7 +332,9 @@ public class CarShowroomClient {
 									System.out.println("2. Display All Cars");
 									System.out.println("3. Add Insurance Info");
 									System.out.println("4. Update Car Data");
-									System.out.println("5. Exit!!!");
+									System.out.println("5. Predict For Car Stock Maintainces");
+									System.out.println("6. Predication for specific Month");
+									System.out.println("7. Exit!!!");
 									System.out.println("==============🚘================🚘==============");
 									System.out.print("Enter the Choice: ");
 									choice3 = sc.nextInt();
@@ -493,11 +492,32 @@ public class CarShowroomClient {
 											}
 										}while(choice!=6);
 										break;
-									case 5:
+									case 5:  	//Predict For Car Stock Maintainces
+										Map<Integer,Integer> m=sCBillService.getPrediction();
+										System.out.println("Showing Prediction on stock maintainance");
+										System.out.println(String.format("%-10s %-20s %-10s", "Car ID", "Car Name", "Stock"));
+										System.out.println(String.format("%-10s %-20s %-10s", "----------", "--------------------", "----------"));
+										for(Map.Entry<Integer, Integer> map: m.entrySet())
+										{
+											carId=map.getKey();
+											int carMCount=map.getValue();
+											carName=cMService.getShowCarNameById(carId);
+											System.out.println(String.format("%-10s %-20s %-10s", carId, carName, carMCount));
+										}
+										break;
+									case 6:	//Sells predication 
+										
+										System.out.println("Enter the date from which you want to consider the sales: (yyyy-mm-dd)");
+										String startDate=sc.nextLine();
+										long predictedSale= sCBillService.getSalePrediction(startDate);
+										
+										
+										break;
+									case 7:
 										System.out.println("Exit From Showroom ");
 										break;
 									}
-								} while (choice3 != 5);
+								} while (choice3 != 7);
 								// end Showroom
 							} else {
 								System.out.println("Not permitted to enter");
@@ -739,7 +759,7 @@ public class CarShowroomClient {
 				break;
 			}
 		} while (choice != 3);
-
+		sc.close();
 	}
 
 }
