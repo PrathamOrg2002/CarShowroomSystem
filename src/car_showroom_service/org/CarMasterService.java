@@ -1,6 +1,7 @@
 package car_showroom_service.org;
 
 import java.util.ArrayList;
+import java.util.*;
 
 import car_showroom_model.org.CarMasterModel;
 import car_showroom_repository.org.CarMasterRepository;
@@ -62,6 +63,10 @@ public class CarMasterService {
 
 	public boolean updateCarTOfFual(CarMasterModel cmm) {
 		return cMRepo.updateCarTOfFual(cmm);
+	}
+
+	public Map<Integer,Integer> getCarStock() {
+		return cMRepo.getCarStock();
 	}
 
 }

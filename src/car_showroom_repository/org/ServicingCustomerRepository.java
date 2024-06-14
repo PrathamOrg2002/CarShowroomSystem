@@ -12,25 +12,22 @@ public class ServicingCustomerRepository extends DBHelper {
 	public boolean isAddServicigCutomer(ServicingCustomerModel customermodel) {
 		
 		try {
-			String insertIdNumNamInServicingCarModel=p.getProperty("insertIdNumNamInServicingCarModel");
-			pstmt=conn.prepareStatement(insertIdNumNamInServicingCarModel);
+			pstmt=conn.prepareStatement(properties.getProperty("insertIdNumNamInServicingCarModel"));
 			pstmt.setString(1, customermodel.getModel().getCarnumber());
 			pstmt.setString(2, customermodel.getModel().getCarmodelname());
 			int value=pstmt.executeUpdate();
 			
 			if(value>0){
 				System.out.println("car of customer added sucessfully");
-				String insertIdNamConInSerCustModel=p.getProperty("insertIdNamConInSerCustModel");
-				pstmt=conn.prepareStatement(insertIdNamConInSerCustModel);
+				pstmt=conn.prepareStatement(properties.getProperty("insertIdNamConInSerCustModel"));
 				pstmt.setString(1, customermodel.getName());
 				pstmt.setString(2, customermodel.getContact());
 				value=pstmt.executeUpdate();
 				if(value>0)
 				{
 					System.out.println("customer added sucessfully");
-					String insertCarCusomerJoin=p.getProperty("insertCarCusomerJoin");
 					int cid=getCustomerIdByName(customermodel.getName());
-					pstmt=conn.prepareStatement(insertCarCusomerJoin);
+					pstmt=conn.prepareStatement(properties.getProperty("insertCarCusomerJoin"));
 					ServicingCarService scs=new ServicingCarService();
 					int carid=scs.getCarIdByNumber(customermodel.getModel().getCarnumber());
 					pstmt.setInt(1, carid);
@@ -48,8 +45,7 @@ public class ServicingCustomerRepository extends DBHelper {
 					for(CarIssue ci:al)
 					{
 						int cid1=ci.getIssueid();
-						String insertInCarIssueJoin=p.getProperty("insertInCarIssueJoin");
-						pstmt=conn.prepareStatement(insertInCarIssueJoin);
+						pstmt=conn.prepareStatement(properties.getProperty("insertInCarIssueJoin"));
 						pstmt.setInt(1,carid);
 						pstmt.setInt(2,cid1);
 						value=pstmt.executeUpdate();
@@ -82,8 +78,7 @@ public class ServicingCustomerRepository extends DBHelper {
 	public int getCustomerIdByName(String name) {
 		try
 		{
-			String selectIdByCustName=p.getProperty("selectIdByCustName");
-			pstmt=conn.prepareStatement(selectIdByCustName);
+			pstmt=conn.prepareStatement(properties.getProperty("selectIdByCustName"));
 			pstmt.setString(1,name);
 			rs=pstmt.executeQuery();
 			if(rs.next())
@@ -102,8 +97,7 @@ public class ServicingCustomerRepository extends DBHelper {
 	public boolean isShowAllServicigCutomer() {
 		try
 		{
-			String selectAllCustAndCar=p.getProperty("selectAllCustAndCar");
-			pstmt=conn.prepareStatement(selectAllCustAndCar);
+			pstmt=conn.prepareStatement(properties.getProperty("selectAllCustAndCar"));
 			rs=pstmt.executeQuery();
 			System.out.println("Id\tName\tContact\t\trecurr\tCarid\tCarno\tCarName\tCarstatus");
 			while(rs.next())

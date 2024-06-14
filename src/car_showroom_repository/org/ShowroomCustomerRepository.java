@@ -10,8 +10,7 @@ public class ShowroomCustomerRepository extends DBHelper{
 	public boolean AddShowRCustInfo(ShowRoomCustomreModel scModel) {
 		try
 		{
-			String insertInShowroomCust =p.getProperty("insertInShowroomCust");
-			pstmt=conn.prepareStatement(insertInShowroomCust);
+			pstmt=conn.prepareStatement(properties.getProperty("insertInShowroomCust"));
 			pstmt.setString(1, scModel.getCustName());
 			pstmt.setString(2, scModel.getContact());
 			pstmt.setString(3, scModel.getCity());
@@ -27,8 +26,7 @@ public class ShowroomCustomerRepository extends DBHelper{
 	public boolean checkDiscount(int custId) {
 		try
 		{
-			String checkDiscountByNumOfBill=p.getProperty("checkDiscountByNumOfBill");
-			pstmt=conn.prepareStatement(checkDiscountByNumOfBill);
+			pstmt=conn.prepareStatement(properties.getProperty("checkDiscountByNumOfBill"));
 			pstmt.setInt(1, custId);
 			rs=pstmt.executeQuery();
 			if(rs.next())
@@ -51,8 +49,7 @@ public class ShowroomCustomerRepository extends DBHelper{
 
 	public int getCustIdByName(ShowRoomCustomreModel sRCModel) {
 		try {
-			String selectIdByCustNameContact=p.getProperty("selectIdByCustNameContact");
-			pstmt=conn.prepareStatement(selectIdByCustNameContact);
+			pstmt=conn.prepareStatement(properties.getProperty("selectIdByCustNameContact"));
 			pstmt.setString(1, sRCModel.getCustName());
 			pstmt.setString(2,sRCModel.getContact());
 			rs=pstmt.executeQuery();

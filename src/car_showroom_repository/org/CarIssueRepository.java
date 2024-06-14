@@ -1,19 +1,14 @@
 package car_showroom_repository.org;
 
-import java.util.Properties;
-
 import car_showroom_config.org.DBHelper;
-import car_showroom_config.org.DBPathHelper;
 import car_showroom_model.org.CarIssue;
-import java.io.*;
 
 
 public class CarIssueRepository extends DBHelper {
 	
 	public boolean isAddIssue(CarIssue imodel) {
 		try {
-			String insertCarIssue=p.getProperty("insertCarIssue");
-			pstmt = conn.prepareStatement(insertCarIssue);
+			pstmt = conn.prepareStatement(properties.getProperty("insertCarIssue"));
 			pstmt.setString(1, imodel.getIssuename());
 			int value = pstmt.executeUpdate();
 			if (value > 0) {
@@ -31,9 +26,7 @@ public class CarIssueRepository extends DBHelper {
 
 	public int getIssueId(String iname) {
 		try {
-			
-			String selectIssueID = p.getProperty("selectIssueID");
-			pstmt = conn.prepareStatement(selectIssueID);
+			pstmt = conn.prepareStatement(properties.getProperty("selectIssueID"));
 			pstmt.setString(1, iname);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
@@ -51,8 +44,7 @@ public class CarIssueRepository extends DBHelper {
 
 	public boolean isShowAllIssue() {
 		try {
-			String selectAllCarIssue =p.getProperty("selectAllCarIssue");
-			pstmt = conn.prepareStatement(selectAllCarIssue);
+			pstmt = conn.prepareStatement(properties.getProperty("selectAllCarIssue"));
 			rs = pstmt.executeQuery();
 			System.out.println("Id\tIssue");
 			while (rs.next()) {
