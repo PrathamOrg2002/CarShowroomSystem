@@ -1,7 +1,6 @@
 package car_showroom_client.org;
 
 import java.util.*;
-
 import car_showroom_custom_exception.org.CheckCustomerException;
 import car_showroom_custom_exception.org.CheckEmployeeException;
 import car_showroom_custom_exception.org.RunTimeCustomException;
@@ -14,6 +13,7 @@ import car_showroom_model.org.ServicingCustomerModel;
 import car_showroom_service.org.CarIssueService;
 import car_showroom_service.org.CarMasterService;
 import car_showroom_service.org.LoginService;
+import car_showroom_service.org.ServicingCarBillService;
 import car_showroom_service.org.ServicingCarService;
 import car_showroom_service.org.ServicingCustomerService;
 import car_showroom_service.org.ShowroomCarBillService;
@@ -26,7 +26,7 @@ import car_showroom_service.org.ShowroomInsuranceService;
 import java.util.*;
 
 public class CarShowroomClient {
-	public static void main(String[] args) {
+	public static void main(String[] args)throws Exception {
 		Scanner sc = new Scanner(System.in);
 		CarMasterService cMService = new CarMasterService();
 		LoginService lServices = new LoginService();
@@ -36,10 +36,12 @@ public class CarShowroomClient {
 		CarIssueService cis = new CarIssueService();
 		ShowroomInsuranceService shInsService = new ShowroomInsuranceService();
 		ShowroomCarBillService sCBillService = new ShowroomCarBillService();
-
+		ServicingCarBillService sbillService = new ServicingCarBillService();
+ 
 		int choice = 0;
 		int choice2 = 0;
 		int choice4 = 0;
+		int choice3=0;
 		do {
 			System.out.println("\n----------------------------------");
 			System.out.println("1.🚘 Enter in Car Showroom 🚘");
@@ -143,10 +145,11 @@ public class CarShowroomClient {
 						System.out.println("  Car Estimate  ");
 						System.out.println("Enter the Car Id ");
 						int CarId = sc.nextInt();
+						sc.nextLine();
 						long carPrice = cMService.getShowCarPriceById(CarId);
 						if (carPrice != -1) {
 							String carName = cMService.getShowCarNameById(CarId);
-							if (carName == null) {
+							if (carName != null) {
 								System.out.println("Insurance List ");
 								ArrayList<ShowroomInsuranceModel> al1 = shInsService.getInsuranceList();
 								if (al1 != null) {
@@ -280,7 +283,7 @@ public class CarShowroomClient {
 							boolean b = lServices.isValidShowEmp(eLModel);
 							if (b) {
 								System.out.println("login succesfull");
-								int choice3 = 0;
+								
 								do {
 									System.out.println("\n==============🚘================🚘==============");
 									System.out.println("1. Add Car Data");
@@ -359,17 +362,20 @@ public class CarShowroomClient {
 							if (b) // Servicing center
 							{
 								System.out.println("login succesfull");
-								int choice3 = 0;
+								choice3 = 0;
 								do {
 									System.out.println("\n==============⚙️================⚙️==============");
 									System.out.println("1. Add new Customer");
 									System.out.println("2. Add new problems/issue/modification element of car");
-									System.out.println(
-											"3. Show all problems/issue/modification element of car present in database");
+									System.out.println("3. Show all problems/issue/modification element of car present in database");
 									System.out.println("4. Show all Customer");
-									System.out.println("5. Search car by id");
+									System.out.println("5. Search Customer/Car");
 									System.out.println("6. Change car status");
-									System.out.println("7. Exit");
+									System.out.println("7. Modify details");
+									System.out.println("8. set bill of car");
+									System.out.println("9. Get bill of car");
+									System.out.println("10. Get total sale between particular date");
+									System.out.println("11. Exit");
 									System.out.println("==============⚙️================⚙️==============");
 									System.out.print("Enter your choice: ");
 									choice3 = sc.nextInt();
@@ -377,63 +383,56 @@ public class CarShowroomClient {
 
 									switch (choice3) {
 									case 1:
-										try
-										{
-											System.out.println("Enter Customer Name");
-											String name = sc.nextLine();
-											CheckCustomerException.checkCustName(name);
-											System.out.println("Enter Customer Contact number");
-											String contact = sc.nextLine();
-											CheckCustomerException.checkCustContact(contact);
-											System.out.println("Enter Car Number");
-											String carnumber = sc.nextLine();
-											System.out.println("Enter Car model name");
-											String carmodelname = sc.nextLine();
-											String replay = "";
-											ArrayList<CarIssue> al = new ArrayList<CarIssue>();
-											int flag1 = 1;
-											do {
-												System.out.println("Enter car problems/issue/modification element one by one");
-												String s = sc.nextLine();
-												int id = cis.getIssueId(s);
-												if (id > 0) {
-													CarIssue imodel = new CarIssue();
-													imodel.setIssueid(id);
-													imodel.setIssuename(name);
-													al.add(imodel);
-												} else {
-													System.out.println("car issue not found add it first");
-													flag1 = 0;
-													break;
-												}
-												System.out.println("Do you want to add more issue");
-												replay = sc.nextLine();
+										System.out.println("Enter Customer Name");
+										String name = sc.nextLine();
+										System.out.println("Enter Customer Contact number");
+										String contact = sc.nextLine();
+										System.out.println("Enter Car Number");
+										String carnumber = sc.nextLine();
+										System.out.println("Enter Car model name");
+										String carmodelname = sc.nextLine();
+										String replay = "";
+										ArrayList<CarIssue> al = new ArrayList<CarIssue>();
+										int flag1 = 1;
+										do {
+											System.out.println("Enter car problems/issue/modification element one by one");
+											String s = sc.nextLine();
+											int id = cis.getIssueId(s);
+											if (id > 0) {
+												CarIssue imodel = new CarIssue();
+												imodel.setIssueid(id);
+												imodel.setIssuename(name);
+												al.add(imodel);
+											} else {
+												System.out.println("car issue not found add it first");
+												flag1 = 0;
+												break;
+											}
+											System.out.println("Do you want to add more issue");
+											replay = sc.nextLine();
 
-											} while (replay.equals("yes"));
-											if (flag1 == 1) {
-												ServicingCarModel carmodel = new ServicingCarModel(carnumber, carmodelname, al);
-												ServicingCustomerModel customermodel = new ServicingCustomerModel(name, contact,
-														carmodel);
+										} while (replay.equals("yes"));
+										if (flag1 == 1) {
+											ServicingCarModel carmodel = new ServicingCarModel(carnumber, carmodelname, al);
+											ServicingCustomerModel customermodel = new ServicingCustomerModel(name, contact,
+													carmodel);
 
-												b = scs.isAddServicigCutomer(customermodel);
-												if (b) {
-													System.out.println("Customer Added Succesfully");
-												} else {
-													System.out.println("Error while adding Customer...");
-												}
+											b = scs.isAddServicigCutomer(customermodel);
+											if (b) {
+												System.out.println("Customer Added Succesfully");
+											} else {
+												System.out.println("Error while adding Customer...");
 											}
 										}
-										catch(RunTimeCustomException rx)
-										{
-											System.out.println(rx.getMsg());
-											rx.printStackTrace();
-										}
-										
 										break;
 									case 2:
 										System.out.println("Enter issue name");
 										String issuename = sc.nextLine();
-										CarIssue imodel = new CarIssue(issuename);
+										System.out.println("Enter price");
+										int price = sc.nextInt();
+										System.out.println("Enter quantity");
+										int quantity = sc.nextInt();
+										CarIssue imodel = new CarIssue(issuename,price,quantity);
 										b = cis.isAddIssue(imodel);
 										if (b) {
 											System.out.println("Issue Added Succesfully");
@@ -448,19 +447,59 @@ public class CarShowroomClient {
 										b = scs.isShowAllServicigCutomer();
 										break;
 									case 5:
+										System.out.print("What do you want to search--> 1)Car 2)Customer\nEnter option number: ");
+										int no=sc.nextInt();
+										sc.nextLine();
+										if(no==1)
+										{
+											System.out.print("How do you want to search car by 1)CarId 2)CustomerId\nEnter option number: ");
+											int no1=sc.nextInt();
+											sc.nextLine();
+											if(no1==1)
+											{
+												System.out.println("Enter car id");
+												int carid = sc.nextInt();
+												sc.nextLine();
+												b = scservice.getCarById(carid);
+											}
+											else if(no1==2)
+											{
+												System.out.println("Enter id of customer");
+												int id=sc.nextInt();
+												sc.nextLine();
+												b=scservice.getCarByCustId(id);
+											}
+											
+										}
+										else if(no==2)
+										{
+											System.out.print("How do you want to search customer by 1)name 2)id\nEnter option number: ");
+											int no1=sc.nextInt();
+											sc.nextLine();
+											if(no1==1)
+											{
+												System.out.println("Enter name of customer");
+												name=sc.nextLine();
+												b=scs.getCustomerByName(name);
+											}
+											else if(no1==2)
+											{
+												System.out.println("Enter id of customer");
+												int id=sc.nextInt();
+												sc.nextLine();
+												b=scs.getCustomerById(id);
+											}
+										}
+										
+										break;
+									case 6:
 										System.out.println("Enter car id");
 										int carid = sc.nextInt();
 										sc.nextLine();
 										b = scservice.getCarById(carid);
-										break;
-									case 6:
-										System.out.println("Enter car id");
-										carid = sc.nextInt();
-										sc.nextLine();
-										b = scservice.getCarById(carid);
 										if (b) {
 											System.out.println("Is car ready for delivery (yes/no)");
-											String replay = sc.nextLine();
+											replay = sc.nextLine();
 											if (replay.equals("yes")) {
 												b = scservice.changeCarStatusYesById(carid);
 											} else if (replay.equals("no")) {
@@ -469,17 +508,190 @@ public class CarShowroomClient {
 										}
 										break;
 									case 7:
+										 option="";
+										do {
+											System.out.println("************************************");
+											System.out.println("1.Update Customer Details");
+											System.out.println("2.Update Car Details");
+											System.out.println("3.Update Issue Details");
+											System.out.println("4.Delete Customer Details");
+											System.out.println("5.Delete Car Details");
+											System.out.println("6.Delete Issue Details");
+											System.out.println("************************************");
+											System.out.println("Enter your choice: ");
+											int ch=sc.nextInt();
+											sc.nextLine();
+											switch(ch)
+											{
+											case 1:
+												System.out.print("How do you want to update customer by 1)name 2)id\nEnter option number: ");
+												int no1=sc.nextInt();
+												sc.nextLine();
+												if(no1==1)
+												{
+													System.out.println("Enter name of customer");
+													name=sc.nextLine();
+													b=scs.isupdateCustomerByName(name);
+												}
+												else if(no1==2)
+												{
+													System.out.println("Enter id of customer");
+													int id=sc.nextInt();
+													sc.nextLine();
+													b=scs.isUpdateCustomerById(id);
+												}
+												break;
+											case 2:
+												System.out.print("How do you want to update car by 1)CarId 2)CustomerId\nEnter option number: ");
+												no1=sc.nextInt();
+												sc.nextLine();
+												if(no1==1)
+												{
+													System.out.println("Enter car id");
+													carid = sc.nextInt();
+													sc.nextLine();
+													b = scservice.isUpdateCarById(carid);
+												}
+												else if(no1==2)
+												{
+													System.out.println("Enter id of customer");
+													int id=sc.nextInt();
+													sc.nextLine();
+													b=scservice.isUpdateCarByCusId(id);
+												}
+												break;
+											case 3:
+												System.out.print("How do you want to update issue by 1)name 2)id\nEnter option number: ");
+												no1=sc.nextInt();
+												sc.nextLine();
+												if(no1==1)
+												{
+													System.out.println("Enter name of issue");
+													name=sc.nextLine();
+													b=cis.isupdateIssueByName(name);
+												}
+												else if(no1==2)
+												{
+													System.out.println("Enter id of issue");
+													int id=sc.nextInt();
+													sc.nextLine();
+													b=cis.isupdateIssueById(id);
+												}
+												break;
+											case 4:
+												System.out.println("Enter id of customer to delete");
+												int id=sc.nextInt();
+												sc.nextLine();
+												b=scs.getCustomerById(id);
+												if(b)
+												{
+													System.out.println("Do you want to delete this customer (yes/no)");
+													option=sc.nextLine();
+													if(option.equals("yes"))
+													{
+														b=scs.deletecustomerById(id);
+													}
+												}
+												break;
+											case 5:
+												System.out.println("Enter id of car to delete");
+												id=sc.nextInt();
+												sc.nextLine();
+												b=scservice.getCarById(id);
+												if(b)
+												{
+													System.out.println("Do you want to delete this car (yes/no)");
+													option=sc.nextLine();
+													if(option.equals("yes"))
+													{
+														b=scservice.deleteCarById(id);
+													}
+												}
+												break;
+											case 6:
+												System.out.println("Enter id of issue to delete");
+												id=sc.nextInt();
+												sc.nextLine();
+												b=cis.getIssueById(id);
+												if(b)
+												{
+													System.out.println("Do you want to delete this issue (yes/no)");
+													option=sc.nextLine();
+													if(option.equals("yes"))
+													{
+														b=cis.deleteIssueById(id);
+													}
+												}
+												break;
+											default:System.out.println("Enter correct choice...");
+											}
+											
+										System.out.println("Do you want to modify more details (yes/no)");
+										option=sc.nextLine();
+										}while(option.equals("yes"));
+										break;
+									case 8:
+										System.out.println("Enter customer id");
+										int id=sc.nextInt();
+										sc.nextLine();
+										b=scs.getCustomerById(id);
+										if(b)
+										{
+											System.out.println("Do you want to generate bill for above customer(yes/no)");
+											String s=sc.nextLine();
+											if(s.equals("yes"))
+											{
+												b=scservice.getCarByCustId(id);
+												if(b)
+												{
+													System.out.println("Do you want to generate bill for above car(yes/no)");
+													s=sc.nextLine();
+													if(s.equals("yes"))
+													{
+														ArrayList<CarIssue>cl=cis.getAllIssueOfCar(id);
+														if(cl!=null)
+														{
+															int amt=0;
+															for(CarIssue ci:cl)
+															{
+																System.out.println("Enter quantity of "+ci.getIssuename() +" used for car");
+																int n=sc.nextInt();
+																sc.nextLine();
+																amt=amt+(n*ci.getPrice());
+															}
+															System.out.println("total bill of car is "+amt);
+															int carId=scservice.getCarIdByCustId(id);
+															b=sbillService.setBill(amt,carId,id);															
+														}
+													}
+												}
+											}
+										}
+										break;
+									case 9:
+										System.out.println("Enter customer id to get bill");
+										int cid=sc.nextInt();
+										sc.nextLine();
+										b=sbillService.getBill(cid);
+										break;
+									case 10:
+										System.out.println("Enter from date and to date to get total sale [Date in this  (yyyy-mm-dd) format]");
+										String fromdate=sc.nextLine();
+										String todate=sc.nextLine();
+										b=sbillService.getSaleByParticularDate(fromdate,todate);
+										break;									
+									case 11:
 										System.out.println("Exited from Servicing Center 🙏🏻");
 										break;
 									default:
 										System.out.println("Enter correct choice");
 									}
 
-								} while (choice3 != 7);
-							} // Servicing center end
+								} while (choice3 != 11);
+							} 
 							else {
 								System.out.println("Not permitted to enter");
-							}
+							}// Servicing center end
 						}
 						catch(RunTimeCustomException rx)
 						{
@@ -520,7 +732,7 @@ public class CarShowroomClient {
 							}
 							
 						}
-						if (choice == 2) {
+						else if (choice1 == 2) {
 							try {
 								System.out.println("Enter the Employee User Name for service sign-up ");
 								String uName = sc.nextLine();
@@ -542,7 +754,6 @@ public class CarShowroomClient {
 								System.out.println(rx.getMsg());
 								rx.printStackTrace();
 							}
-							
 						}
 						break;
 					case 4:

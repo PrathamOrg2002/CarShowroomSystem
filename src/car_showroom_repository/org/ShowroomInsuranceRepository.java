@@ -11,8 +11,7 @@ public class ShowroomInsuranceRepository extends DBHelper{
 	public boolean setInsuranceInfo(ShowroomInsuranceModel shInsModel) {
 		try
 		{
-			String insertInInsMaster=p.getProperty("insertInInsMaster");
-			pstmt=conn.prepareStatement(insertInInsMaster);
+			pstmt=conn.prepareStatement(properties.getProperty("insertInInsMaster"));
 			pstmt.setString(1, shInsModel.getName());
 			pstmt.setLong(2,shInsModel.getPrice());
 			return pstmt.executeUpdate()>0 ? true: false ;
@@ -29,8 +28,7 @@ public class ShowroomInsuranceRepository extends DBHelper{
 		ArrayList<ShowroomInsuranceModel> al= new ArrayList<ShowroomInsuranceModel>();
 		try
 		{
-			String selectAllInsurance=p.getProperty("selectAllInsurance");
-			pstmt=conn.prepareStatement(selectAllInsurance);
+			pstmt=conn.prepareStatement(properties.getProperty("selectAllInsurance"));
 			rs=pstmt.executeQuery();
 			while(rs.next())
 			{
@@ -54,8 +52,7 @@ public class ShowroomInsuranceRepository extends DBHelper{
 	public ShowroomInsuranceModel getInsurancePrice(int insId) {
 		try
 		{
-			String selectInsById=p.getProperty("selectInsById");
-			pstmt=conn.prepareStatement(selectInsById);
+			pstmt=conn.prepareStatement(properties.getProperty("selectInsById"));
 			pstmt.setInt(1, insId);
 			rs=pstmt.executeQuery();
 			if(rs.next())
