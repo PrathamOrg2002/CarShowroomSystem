@@ -8,8 +8,7 @@ public class ServicingCarRepository extends DBHelper {
 		
 		try
 		{
-			String selectIdByCarNumber=p.getProperty("selectIdByCarNumber");
-			pstmt=conn.prepareStatement(selectIdByCarNumber);
+			pstmt=conn.prepareStatement(properties.getProperty("selectIdByCarNumber"));
 			pstmt.setString(1,number);
 			rs=pstmt.executeQuery();
 			if(rs.next())
@@ -29,7 +28,7 @@ public class ServicingCarRepository extends DBHelper {
 	public boolean getCarById(int id) {
 		try
 		{
-			String selectAllServicingCarModel =p.getProperty("selectAllServicingCarModel");
+			String selectAllServicingCarModel =properties.getProperty("selectAllServicingCarModel");
 			pstmt=conn.prepareStatement(selectAllServicingCarModel);
 			pstmt.setInt(1, id);
 			rs=pstmt.executeQuery();
@@ -54,8 +53,7 @@ public class ServicingCarRepository extends DBHelper {
 	public boolean changeCarStatusYesById(int carid) {
 		try
 		{
-			String updateServicingCarModel=p.getProperty("updateServicingCarModel");
-			pstmt=conn.prepareStatement(updateServicingCarModel);
+			pstmt=conn.prepareStatement(properties.getProperty("updateServicingCarModel"));
 			pstmt.setInt(1, carid);
 			int value=pstmt.executeUpdate();
 			if(value>0)
@@ -79,7 +77,7 @@ public class ServicingCarRepository extends DBHelper {
 	public boolean changeCarStatusNoById(int carid) {
 		try
 		{
-			String updateservicingcarmodelId=p.getProperty("updateservicingcarmodelId");
+			String updateservicingcarmodelId=properties.getProperty("updateservicingcarmodelId");
 			pstmt=conn.prepareStatement(updateservicingcarmodelId);
 			pstmt.setInt(1, carid);
 			int value=pstmt.executeUpdate();

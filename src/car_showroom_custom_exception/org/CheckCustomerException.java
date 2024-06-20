@@ -35,7 +35,7 @@ public class CheckCustomerException {
 			int no=ch;
 			if( !( (no>=65 && no<=90) || (no>=97 && no<=122) ) )
 			{
-				throw new RunTimeCustomException("🤐🤐 Customer Name is Invalid 🙏 Please Enter the Valid City Name 🤐🤐");
+				throw new RunTimeCustomException("🤐🤐 City Name is Invalid 🙏 Please Enter the Valid City Name 🤐🤐");
 			}
 		}
 	}

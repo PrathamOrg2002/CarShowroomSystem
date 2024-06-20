@@ -13,8 +13,7 @@ public class LoginRepository extends DBHelper {
 		
 		try
 		{
-			String selectEmpCarLogin=p.getProperty("selectEmpCarLogin");
-			pstmt=conn.prepareStatement(selectEmpCarLogin);
+			pstmt=conn.prepareStatement(properties.getProperty("selectEmpCarLogin"));
 			pstmt.setString(1, eRM.getuName());
 			pstmt.setString(2, eRM.getpWord());
 			rs=pstmt.executeQuery();
@@ -48,8 +47,7 @@ public class LoginRepository extends DBHelper {
 	public boolean isValidServiceEmp(LoginModel eLModel) {
 		try
 		{
-			String selectEmpSerLogin=p.getProperty("selectEmpSerLogin");
-			pstmt=conn.prepareStatement(selectEmpSerLogin);
+			pstmt=conn.prepareStatement(properties.getProperty("selectEmpSerLogin"));
 			pstmt.setString(1, eLModel.getuName());
 			pstmt.setString(2, eLModel.getpWord());
 			rs=pstmt.executeQuery();
@@ -84,8 +82,7 @@ public class LoginRepository extends DBHelper {
 	public boolean empSignUpInShowR(LoginModel eLModel) {
 		try
 		{
-			String insertInEmpCarLogin=p.getProperty("insertInEmpCarLogin");
-			pstmt=conn.prepareStatement(insertInEmpCarLogin);
+			pstmt=conn.prepareStatement(properties.getProperty("insertInEmpCarLogin"));
 			pstmt.setString(1, eLModel.getuName());
 			pstmt.setString(2, eLModel.getpWord());
 			int value=pstmt.executeUpdate();
@@ -107,8 +104,7 @@ public class LoginRepository extends DBHelper {
 	public boolean empSignUpInService(LoginModel eLModel) {
 		try
 		{
-			String insertInEmpSerLogin=p.getProperty("insertInEmpSerLogin");
-			pstmt=conn.prepareStatement(insertInEmpSerLogin);
+			pstmt=conn.prepareStatement(properties.getProperty("insertInEmpSerLogin"));
 			pstmt.setString(1, eLModel.getuName());
 			pstmt.setString(2, eLModel.getpWord());
 			int value=pstmt.executeUpdate();

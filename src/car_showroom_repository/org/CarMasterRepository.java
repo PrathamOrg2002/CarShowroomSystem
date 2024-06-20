@@ -1,6 +1,8 @@
 package car_showroom_repository.org;
 
 import java.util.ArrayList;
+import java.sql.*;
+import java.util.*;
 
 import car_showroom_config.org.DBHelper;
 import car_showroom_model.org.CarMasterModel;
@@ -9,8 +11,7 @@ public class CarMasterRepository extends DBHelper{
 
 	public boolean addCarData(CarMasterModel cMModel) {
 		try {
-			String insertInCarmaster=p.getProperty("insertInCarmaster");
-			cs=conn.prepareCall(insertInCarmaster);
+			cs=conn.prepareCall(properties.getProperty("insertInCarmaster"));
 			cs.setInt(1, cMModel.getCarId());
 			cs.setString(2, cMModel.getCarName());
 			cs.setLong(3, cMModel.getCarPrice());
@@ -33,8 +34,7 @@ public class CarMasterRepository extends DBHelper{
 		ArrayList<CarMasterModel> al= new ArrayList<CarMasterModel>();
 		try
 		{
-			String selectAllcarmaster=p.getProperty("selectAllcarmaster");
-			pstmt=conn.prepareStatement(selectAllcarmaster);
+			pstmt=conn.prepareStatement(properties.getProperty("selectAllcarmaster"));
 			rs=pstmt.executeQuery();
 			while(rs.next())
 			{
@@ -58,8 +58,7 @@ public class CarMasterRepository extends DBHelper{
 	public long getShowCarPriceById(int carId) {
 		try
 		{
-			String selctCarPriceFromCarId=p.getProperty("selctCarPriceFromCarId");
-			pstmt=conn.prepareStatement(selctCarPriceFromCarId);
+			pstmt=conn.prepareStatement(properties.getProperty("selctCarPriceFromCarId"));
 			pstmt.setInt(1, carId);
 			rs=pstmt.executeQuery();
 			if(rs.next())
@@ -84,8 +83,7 @@ public class CarMasterRepository extends DBHelper{
 	public String getShowCarNameById(int carId) {
 		try
 		{
-			String selectCarNameByCarId=p.getProperty("selectCarNameByCarId");
-			pstmt=conn.prepareStatement(selectCarNameByCarId);
+			pstmt=conn.prepareStatement(properties.getProperty("selectCarNameByCarId"));
 			pstmt.setInt(1, carId);
 			rs=pstmt.executeQuery();
 			if(rs.next())
@@ -109,8 +107,7 @@ public class CarMasterRepository extends DBHelper{
 	public long getShowCarPriceByName(String carName) {
 		try
 		{
-			String selectCarPriceByCarName=p.getProperty("selectCarPriceByCarName");
-			pstmt=conn.prepareStatement(selectCarPriceByCarName);
+			pstmt=conn.prepareStatement(properties.getProperty("selectCarPriceByCarName"));
 			pstmt.setString(1, carName);
 			rs=pstmt.executeQuery();
 			if(rs.next())
@@ -134,8 +131,7 @@ public class CarMasterRepository extends DBHelper{
 	public int getCarIdbyName(String carName) {
 		try
 		{
-			String selectCarIdFromCarName=p.getProperty("selectCarIdFromCarName");
-			pstmt=conn.prepareStatement(selectCarIdFromCarName);
+			pstmt=conn.prepareStatement(properties.getProperty("selectCarIdFromCarName"));
 
 			pstmt.setString(1, carName);
 			rs=pstmt.executeQuery();
@@ -159,8 +155,7 @@ public class CarMasterRepository extends DBHelper{
 	public int getCarIdAuto() {
 		try
 		{
-			String getCarIDAuto=p.getProperty("getCarIDAuto");
-			pstmt=conn.prepareStatement(getCarIDAuto);
+			pstmt=conn.prepareStatement(properties.getProperty("getCarIDAuto"));
 			rs=pstmt.executeQuery();
 			if(rs.next())
 			{
@@ -182,8 +177,7 @@ public class CarMasterRepository extends DBHelper{
 	public CarMasterModel getCarFeature(int carId) {
 		try
 		{
-			String getCarFeature=p.getProperty("getCarFeature");
-			pstmt=conn.prepareStatement(getCarFeature);
+			pstmt=conn.prepareStatement(properties.getProperty("getCarFeature"));
 			pstmt.setInt(1, carId);
 			rs=pstmt.executeQuery();
 			if(rs.next())
@@ -212,7 +206,7 @@ public class CarMasterRepository extends DBHelper{
 		ArrayList<CarMasterModel> al= new ArrayList<CarMasterModel>();
 		try
 		{
-			pstmt=conn.prepareStatement(p.getProperty("getCarByPrice"));
+			pstmt=conn.prepareStatement(properties.getProperty("getCarByPrice"));
 			pstmt.setLong(1, carPrice);
 			rs=pstmt.executeQuery();
 			while(rs.next())
@@ -236,7 +230,7 @@ public class CarMasterRepository extends DBHelper{
 	public boolean updateCarPrice(CarMasterModel cmm) {
 		try
 		{
-			pstmt=conn.prepareStatement(p.getProperty("UpdateCarPrice"));
+			pstmt=conn.prepareStatement(properties.getProperty("UpdateCarPrice"));
 			pstmt.setLong(1, cmm.getCarPrice());
 			pstmt.setInt(2, cmm.getCarId());
 			return pstmt.executeUpdate() >0 ? true : false;
@@ -251,7 +245,7 @@ public class CarMasterRepository extends DBHelper{
 	public boolean updateCarName(CarMasterModel cmm) {
 		try
 		{
-			pstmt=conn.prepareStatement(p.getProperty("UpdateCarName"));
+			pstmt=conn.prepareStatement(properties.getProperty("UpdateCarName"));
 			pstmt.setString(1, cmm.getCarName());
 			pstmt.setInt(2, cmm.getCarId());
 			return pstmt.executeUpdate() >0 ? true : false;
@@ -266,7 +260,7 @@ public class CarMasterRepository extends DBHelper{
 	public boolean updateCarCC(CarMasterModel cmm) {
 		try
 		{
-			pstmt=conn.prepareStatement(p.getProperty("UpdateCarCC"));
+			pstmt=conn.prepareStatement(properties.getProperty("UpdateCarCC"));
 			pstmt.setLong(1, cmm.getCarCC());
 			pstmt.setInt(2, cmm.getCarId());
 			return pstmt.executeUpdate() >0 ? true : false;
@@ -281,7 +275,7 @@ public class CarMasterRepository extends DBHelper{
 	public boolean updateCarMileage(CarMasterModel cmm) {
 		try
 		{
-			pstmt=conn.prepareStatement(p.getProperty("UpdateCarMileage"));
+			pstmt=conn.prepareStatement(properties.getProperty("UpdateCarMileage"));
 			pstmt.setLong(1, cmm.getMileage());
 			pstmt.setInt(2, cmm.getCarId());
 			return pstmt.executeUpdate() >0 ? true : false;
@@ -296,7 +290,7 @@ public class CarMasterRepository extends DBHelper{
 	public boolean updateCarTOfFual(CarMasterModel cmm) {
 		try
 		{
-			pstmt=conn.prepareStatement(p.getProperty("UpdateCarTypeOfFual"));
+			pstmt=conn.prepareStatement(properties.getProperty("UpdateCarTypeOfFual"));
 			pstmt.setString(1, cmm.getFuel());
 			pstmt.setInt(2, cmm.getCarId());
 			return pstmt.executeUpdate() >0 ? true : false;
@@ -306,5 +300,36 @@ public class CarMasterRepository extends DBHelper{
 			ex.printStackTrace();
 			return false;
 		}
+	}
+
+	public Map<Integer,Integer> getCarStock() {
+		try
+		{
+			Map<Integer,Integer> map= new LinkedHashMap<Integer,Integer>();
+			pstmt=conn.prepareStatement(properties.getProperty("getCarStock"));
+			rs=pstmt.executeQuery();
+			while(rs.next())
+			{
+//				int carId=rs.getInt(1);
+//				System.out.println(rs.getInt(1));
+				PreparedStatement pstmt2=conn.prepareStatement("select count(carId) from showcustcarjoin where carId=? group by carId having count(carId) > 0");
+				pstmt2.setInt(1,rs.getInt(1));
+				ResultSet rs2=pstmt2.executeQuery();
+				if(rs2.next())
+				{
+//					System.out.println(rs2.getInt(1));
+					map.put(rs.getInt(1), rs2.getInt(1));
+				}
+			}
+//			
+//			System.out.println(map);
+			return map;
+		}
+		catch(Exception ex)
+		{
+			System.out.println("Error in "+ex);
+			ex.printStackTrace();
+		}
+		return null;
 	}
 }
