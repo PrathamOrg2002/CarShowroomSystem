@@ -1,6 +1,5 @@
 package car_showroom_config.org;
 
-import java.io.*;
 import java.sql.*;
 import java.util.Properties;
 
@@ -10,6 +9,7 @@ public class DBConfig {
 	private static Statement stmt;
 	private static ResultSet rs;
 	private static DBConfig db = null;
+	private static CallableStatement cs;
 	private static Properties p = new Properties();
 	// constructer
 	private DBConfig() {
@@ -67,5 +67,10 @@ public class DBConfig {
 	public static Properties getp()
 	{
 		return p; 
+	}
+	
+	public static CallableStatement getCallStatement()
+	{
+		return cs;
 	}
 }
